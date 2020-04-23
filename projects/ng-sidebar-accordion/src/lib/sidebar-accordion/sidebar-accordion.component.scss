@@ -1,0 +1,45 @@
+:host {
+  display: grid;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "left-pane top-pane right-pane" "left-pane content-pane right-pane" "left-pane bottom-pane bottom-pane";
+}
+
+%pane {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.ng-sidebar-accordion {
+
+
+  &__top-pane {
+    @extend %pane;
+    grid-area: top-pane;
+  }
+
+  &__bottom-pane {
+    @extend %pane;
+    grid-area: bottom-pane;
+  }
+
+  &__left-pane {
+    @extend %pane;
+    grid-area: left-pane;
+  }
+
+  &__right-pane {
+    @extend %pane;
+    grid-area: right-pane;
+  }
+
+  &__content-pane {
+    grid-area: content-pane;
+  }
+}
+
