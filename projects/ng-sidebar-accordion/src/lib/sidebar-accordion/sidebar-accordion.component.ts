@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy} from '@angular/core';
+import {SidebarComponent} from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'ng-sidebar-accordion',
@@ -19,14 +20,54 @@ import {Component, OnInit} from '@angular/core';
       <ng-content select="ng-sidebar[position=bottom]"></ng-content>
     </div>
   `,
-  styleUrls: ['./sidebar-accordion.component.scss']
+  styleUrls: ['./sidebar-accordion.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarAccordionComponent implements OnInit {
+export class SidebarAccordionComponent implements OnDestroy {
+
+  @Input() @HostBinding('class') className: string;
+
+  private _sidebars: Array<SidebarComponent> = [];
 
   constructor() {
+    // console.log('sidebarAccordion')
   }
 
-  ngOnInit(): void {
+
+  ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
+  _addSidebar(sidebar: SidebarComponent): void {
+    this._sidebars.push(sidebar);
+    this.subscribe(sidebar);
+  }
+
+  _removeSidebar(sidebar: SidebarComponent): void {
+    const index = this._sidebars.indexOf(sidebar);
+    if (index !== -1) {
+      this._sidebars.splice(index, 1);
+    }
+  }
+
+  private subscribe(sidebar: SidebarComponent): void {
+    sidebar.toggle.subscribe((e: SidebarComponent) => {
+      e.opened ? e.close() : e.open();
+    });
+    sidebar.openedChange.subscribe((e: { sender: SidebarComponent, opened: boolean }) => {
+      if (e.opened) {
+        this._sidebars.filter(s => s.opened && s != e.sender &&
+          s.position === e.sender.position
+        ).forEach(s => s.close());
+      }
+    });
+  }
+
+  private unsubscribe(): void {
+    this._sidebars.forEach(sidebar => {
+      sidebar.toggle.unsubscribe();
+      sidebar.openedChange.unsubscribe();
+    });
   }
 
 }

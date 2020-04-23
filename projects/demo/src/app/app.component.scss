@@ -1,0 +1,22 @@
+.ng-sidebar__ng-sidebar-header {
+  background-color: #bbbbbb;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.app {
+  &__content-pane{
+    background: #eeeeee;
+    height: 100%;
+  }
+  &__ng-sidebar-header_vertical {
+    transform: rotate(270deg);
+    width: 20px;
+    white-space: nowrap;
+
+    &-border {
+      border-right: solid 2px #eeeeee;
+    }
+  }
+}

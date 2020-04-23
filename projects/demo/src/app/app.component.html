@@ -1,29 +1,77 @@
 <ng-sidebar-accordion>
-  <ng-sidebar
-    [className]="'myclassname'"
-    position="left">
-    <ng-sidebar-header>left-pane</ng-sidebar-header>
-  </ng-sidebar>
-  <ng-sidebar
-    position="right">
-    <ng-sidebar-header>
-      <div style="height: 50px">right-pane-1</div>
-      <div style="height: 200px">asdlfjasldfjasldfjalsdf</div>
+<!--  <ng-sidebar [className]="'myclassname'" position="left">-->
+<!--    <ng-sidebar-header [className]="'cl1'">left-pane1</ng-sidebar-header>-->
+<!--  </ng-sidebar>-->
+
+  <ng-sidebar position="right">
+    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">
+      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
+        <div>right-pane-1</div>
+        <div>sidebar-right-pane-header</div>
+      </div>
+
     </ng-sidebar-header>
+
+    <ng-sidebar-content
+      [className]="'app__sidebar-right-pane'"
+    >sidebar-content right pane1
+    </ng-sidebar-content>
   </ng-sidebar>
-  <ng-sidebar
-    position="right">
-    <ng-sidebar-header>
-      right-pane-2
+
+  <ng-sidebar position="right">
+    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">
+      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
+        <div>right-pane-1</div>
+        <div>sidebar-right-pane-header</div>
+      </div>
+
     </ng-sidebar-header>
+
+    <ng-sidebar-content
+      [className]="'app__sidebar-right-pane'"
+    >sidebar-content right pane1
+    </ng-sidebar-content>
   </ng-sidebar>
-  <ng-sidebar
-    position="top">
-    <ng-sidebar-header>top-pane</ng-sidebar-header>
+
+  <ng-sidebar position="right">
+    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">
+      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
+        <div>right-pane-1</div>
+        <div>sidebar-right-pane-header</div>
+      </div>
+
+    </ng-sidebar-header>
+
+    <ng-sidebar-content
+      [className]="'app__sidebar-right-pane'"
+    >sidebar-content right pane1
+    </ng-sidebar-content>
   </ng-sidebar>
-  <ng-sidebar
-    position="bottom">
+
+  <ng-sidebar position="right">
+    <ng-sidebar-header>
+      <div class="app__ng-sidebar-header_vertical">right-pane-2</div>
+    </ng-sidebar-header>
+    <ng-sidebar-content>
+      <div style="background-color: #eeeeee; height: 100%;">sidebar-content right pane2</div>
+    </ng-sidebar-content>
+  </ng-sidebar>
+
+
+<!--  <ng-sidebar position="top">-->
+<!--    <ng-sidebar-header>top-pane</ng-sidebar-header>-->
+<!--    <ng-sidebar-content>-->
+<!--      <div>asdfasdfa</div>-->
+<!--      <div style="height: 150px">asldkjf alsdjfalsjdfajsdf lajsdf la</div>-->
+<!--    </ng-sidebar-content>-->
+<!--  </ng-sidebar>-->
+
+  <ng-sidebar position="bottom">
     <ng-sidebar-header>bottom-pane</ng-sidebar-header>
   </ng-sidebar>
-  <div>content-pane</div>
+
+  <div class="app__content-pane">
+    ddddddddddddddddddddddddd1111111111111111111111111
+  <div>asdfdddddddddddddddddddddddddddddddddd</div>
+  </div>
 </ng-sidebar-accordion>

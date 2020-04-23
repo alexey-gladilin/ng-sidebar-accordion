@@ -1,10 +1,9 @@
-/*
 ::ng-deep .ng-sidebar-accordion__left-pane,
 ::ng-deep .ng-sidebar-accordion__right-pane {
   .ng-sidebar {
-    &__header {
-      display: flex;
-      align-items: center;
+    display: flex;
+
+    &__ng-sidebar-header {
       height: 100%;
     }
   }
@@ -12,14 +11,22 @@
 
 ::ng-deep .ng-sidebar-accordion__top-pane,
 ::ng-deep .ng-sidebar-accordion__bottom-pane {
-  .ng-sidebar {
-    width: 100%;
 
-    &__header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  .ng-sidebar {
+    flex-direction: column;
+
+    &__ng-sidebar-header {
+      width: 100%;
     }
   }
 }
-*/
+
+::ng-deep.ng-sidebar {
+  &__ng-sidebar-content {
+    display: none;
+  }
+  &__ng-sidebar-content_open {
+    display: block;
+  }
+}
+

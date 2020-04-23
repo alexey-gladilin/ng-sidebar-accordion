@@ -6,7 +6,7 @@
   overflow: hidden;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  grid-template-areas: "left-pane top-pane right-pane" "left-pane content-pane right-pane" "left-pane bottom-pane bottom-pane";
+  grid-template-areas: "left-pane top-pane right-pane" "left-pane content-pane right-pane" "left-pane bottom-pane right-pane";
 }
 
 %pane {
@@ -19,12 +19,12 @@
 
 
   &__top-pane {
-    @extend %pane;
+    //@extend %pane;
     grid-area: top-pane;
   }
 
   &__bottom-pane {
-    @extend %pane;
+    //@extend %pane;
     grid-area: bottom-pane;
   }
 

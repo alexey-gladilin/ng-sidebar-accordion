@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {NgSidebarAccordionModule} from 'ng-sidebar-accordion';
+import {SidebarAccordionModule} from 'ng-sidebar-accordion';
 import {AppComponent} from './app.component';
 
 @NgModule({
@@ -9,8 +9,7 @@ import {AppComponent} from './app.component';
   ],
   imports: [
     BrowserModule,
-    NgSidebarAccordionModule,
-    NgSidebarAccordionModule
+    SidebarAccordionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
