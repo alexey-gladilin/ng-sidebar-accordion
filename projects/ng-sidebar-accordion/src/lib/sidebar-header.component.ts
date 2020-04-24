@@ -10,24 +10,18 @@ import {
   Optional,
   Output
 } from '@angular/core';
-import {SidebarComponent} from './sidebar/sidebar.component';
+import {SidebarComponent} from './sidebar.component';
 
 @Component({
   selector: 'ng-sidebar-header',
   template: `
     <ng-content></ng-content>`,
-  styles: [`
-    :host {
-      user-select: none;
-    }
-  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarHeaderComponent implements OnInit, OnDestroy {
 
+  @HostBinding('class.ng-sidebar-header') classNameSidebarHeader = true;
   @Input() @HostBinding('class') className: string;
-  @Input() @HostBinding('style.width') width: string;
-  @Input() @HostBinding('style.height') height: string;
 
   @Output() clicked = new EventEmitter<MouseEvent>();
 

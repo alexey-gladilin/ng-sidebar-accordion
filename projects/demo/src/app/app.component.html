@@ -1,50 +1,52 @@
+<button
+  (click)="sidebar.opened=!sidebar.opened"
+>click
+</button>
 <ng-sidebar-accordion>
-<!--  <ng-sidebar [className]="'myclassname'" position="left">-->
-<!--    <ng-sidebar-header [className]="'cl1'">left-pane1</ng-sidebar-header>-->
-<!--  </ng-sidebar>-->
+  <!--  <ng-sidebar [className]="'myclassname'" position="left">-->
+  <!--    <ng-sidebar-header [className]="'cl1'">left-pane1</ng-sidebar-header>-->
+  <!--  </ng-sidebar>-->
 
-  <ng-sidebar position="right">
-    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">
+  <!--  <ng-sidebar position="right">-->
+  <!--    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">-->
+  <!--      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">-->
+  <!--        <div>right-pane-1</div>-->
+  <!--        <div>sidebar-right-pane-header</div>-->
+  <!--      </div>-->
+
+  <!--    </ng-sidebar-header>-->
+
+  <!--    <ng-sidebar-content-->
+  <!--      [className]="'app__sidebar-right-pane'"-->
+  <!--    >sidebar-content right pane1-->
+  <!--    </ng-sidebar-content>-->
+  <!--  </ng-sidebar>-->
+
+  <!--  <ng-sidebar position="right">-->
+  <!--    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">-->
+  <!--      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">-->
+  <!--        <div>right-pane-1</div>-->
+  <!--        <div>sidebar-right-pane-header</div>-->
+  <!--      </div>-->
+
+  <!--    </ng-sidebar-header>-->
+
+  <!--    <ng-sidebar-content-->
+  <!--      [className]="'app__sidebar-right-pane'"-->
+  <!--    >sidebar-content right pane1-->
+  <!--    </ng-sidebar-content>-->
+  <!--  </ng-sidebar>-->
+
+  <ng-sidebar #sidebar position="right" [opened]="true">
+    <ng-sidebar-header>
       <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
         <div>right-pane-1</div>
         <div>sidebar-right-pane-header</div>
       </div>
-
     </ng-sidebar-header>
 
-    <ng-sidebar-content
-      [className]="'app__sidebar-right-pane'"
-    >sidebar-content right pane1
-    </ng-sidebar-content>
-  </ng-sidebar>
-
-  <ng-sidebar position="right">
-    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">
-      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
-        <div>right-pane-1</div>
-        <div>sidebar-right-pane-header</div>
-      </div>
-
-    </ng-sidebar-header>
-
-    <ng-sidebar-content
-      [className]="'app__sidebar-right-pane'"
-    >sidebar-content right pane1
-    </ng-sidebar-content>
-  </ng-sidebar>
-
-  <ng-sidebar position="right">
-    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">
-      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
-        <div>right-pane-1</div>
-        <div>sidebar-right-pane-header</div>
-      </div>
-
-    </ng-sidebar-header>
-
-    <ng-sidebar-content
-      [className]="'app__sidebar-right-pane'"
-    >sidebar-content right pane1
+    <ng-sidebar-content>
+      sidebar-content right pane1
     </ng-sidebar-content>
   </ng-sidebar>
 
@@ -58,20 +60,23 @@
   </ng-sidebar>
 
 
-<!--  <ng-sidebar position="top">-->
-<!--    <ng-sidebar-header>top-pane</ng-sidebar-header>-->
-<!--    <ng-sidebar-content>-->
-<!--      <div>asdfasdfa</div>-->
-<!--      <div style="height: 150px">asldkjf alsdjfalsjdfajsdf lajsdf la</div>-->
-<!--    </ng-sidebar-content>-->
-<!--  </ng-sidebar>-->
+  <!--  <ng-sidebar position="top">-->
+  <!--    <ng-sidebar-header>top-pane</ng-sidebar-header>-->
+  <!--    <ng-sidebar-content>-->
+  <!--      <div>asdfasdfa</div>-->
+  <!--      <div style="height: 150px">asldkjf alsdjfalsjdfajsdf lajsdf la</div>-->
+  <!--    </ng-sidebar-content>-->
+  <!--  </ng-sidebar>-->
 
-  <ng-sidebar position="bottom">
-    <ng-sidebar-header>bottom-pane</ng-sidebar-header>
-  </ng-sidebar>
+  <!--  <ng-sidebar position="bottom">-->
+  <!--    <ng-sidebar-header>bottom-pane</ng-sidebar-header>-->
+  <!--  </ng-sidebar>-->
 
-  <div class="app__content-pane">
+  <ng-sidebar-accordion-content>
     ddddddddddddddddddddddddd1111111111111111111111111
-  <div>asdfdddddddddddddddddddddddddddddddddd</div>
-  </div>
+    <div>asdfdddddddddddddddddddddddddddddddddd</div>
+  </ng-sidebar-accordion-content>
+
+
 </ng-sidebar-accordion>
+

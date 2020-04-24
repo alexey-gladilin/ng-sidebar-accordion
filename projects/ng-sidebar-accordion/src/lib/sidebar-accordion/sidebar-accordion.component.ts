@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy} from '@angular/core';
-import {SidebarComponent} from "../sidebar/sidebar.component";
+import {SidebarComponent} from "../sidebar.component";
 
 @Component({
   selector: 'ng-sidebar-accordion',
@@ -14,7 +14,7 @@ import {SidebarComponent} from "../sidebar/sidebar.component";
       <ng-content select="ng-sidebar[position=right]"></ng-content>
     </div>
     <div class="ng-sidebar-accordion__content-pane">
-      <ng-content></ng-content>
+      <ng-content select="ng-sidebar-accordion-content"></ng-content>
     </div>
     <div class="ng-sidebar-accordion__bottom-pane">
       <ng-content select="ng-sidebar[position=bottom]"></ng-content>
@@ -25,14 +25,13 @@ import {SidebarComponent} from "../sidebar/sidebar.component";
 })
 export class SidebarAccordionComponent implements OnDestroy {
 
+  @HostBinding('class.ng-sidebar-accordion') classNameSidebarAccordion = true;
+
+  @Input() @HostBinding('style.width') width: string;
+  @Input() @HostBinding('style.height') height: string;
   @Input() @HostBinding('class') className: string;
 
   private _sidebars: Array<SidebarComponent> = [];
-
-  constructor() {
-    // console.log('sidebarAccordion')
-  }
-
 
   ngOnDestroy(): void {
     this.unsubscribe();

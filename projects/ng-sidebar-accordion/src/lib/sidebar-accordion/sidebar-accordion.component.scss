@@ -1,4 +1,11 @@
-:host {
+%pane {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+::ng-deep.ng-sidebar-accordion {
+
   display: grid;
   position: relative;
   height: 100%;
@@ -7,16 +14,6 @@
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
   grid-template-areas: "left-pane top-pane right-pane" "left-pane content-pane right-pane" "left-pane bottom-pane right-pane";
-}
-
-%pane {
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.ng-sidebar-accordion {
-
 
   &__top-pane {
     //@extend %pane;
