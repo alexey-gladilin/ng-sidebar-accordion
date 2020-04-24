@@ -9,9 +9,13 @@ $variable-prefix: --ng-sidebar-accordion-;
 ::ng-deep:root {
   #{$variable-prefix}space-header: 40px;
   #{$variable-prefix}space-header-border: 2px;
+  #{$variable-prefix}space-content: 300px;
+
   #{$variable-prefix}color-bg: #ffffff;
   #{$variable-prefix}color-header: #ffffff;
   #{$variable-prefix}color-header-bg: #337ab7;
+
+  #{$variable-prefix}animation-duration: 0.5s;
 }
 
 ::ng-deep.ng-sidebar-accordion {
@@ -110,22 +114,26 @@ $variable-prefix: --ng-sidebar-accordion-;
   &__bottom-pane {
     .ng-sidebar {
       @extend %pane;
+
+      &_opened {
+        .ng-sidebar-content {
+          height: var(#{$variable-prefix}space-content);
+          max-height: var(#{$variable-prefix}space-content);
+          transition: height var(#{$variable-prefix}animation-duration);
+        }
+      }
     }
 
     .ng-sidebar-header {
       justify-content: center;
       height: var(#{$variable-prefix}space-header);
       align-items: center;
-
-
-      //&__wrapper {
-      //  white-space: nowrap;
-      //  transform: rotate(270deg);
-      //}
     }
 
     .ng-sidebar-content {
       height: 0;
+      overflow: hidden;
+      transition: height var(#{$variable-prefix}animation-duration);
     }
   }
 
@@ -133,6 +141,14 @@ $variable-prefix: --ng-sidebar-accordion-;
   &__right-pane {
     .ng-sidebar {
       @extend %pane;
+
+      &_opened {
+        .ng-sidebar-content {
+          max-width: var(#{$variable-prefix}space-content);
+          width: var(#{$variable-prefix}space-content);
+          transition: width var(#{$variable-prefix}animation-duration);
+        }
+      }
     }
 
     .ng-sidebar-header {
@@ -149,11 +165,16 @@ $variable-prefix: --ng-sidebar-accordion-;
 
     .ng-sidebar-content {
       width: 0;
+      overflow: hidden;
+      transition: width var(#{$variable-prefix}animation-duration);
+
     }
   }
 
   .ng-sidebar-header {
     @extend %pane;
+    user-select: none;
+    cursor: pointer;
     background-color: var(#{$variable-prefix}color-header-bg);
     color: var(#{$variable-prefix}color-header);
   }
