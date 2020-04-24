@@ -1,4 +1,4 @@
-<ng-sidebar-accordion>
+<ng-sidebar-accordion #accordion>
   <ng-sidebar position="top">
     <ng-sidebar-header>top-pane1-header</ng-sidebar-header>
     <ng-sidebar-content>
@@ -54,10 +54,9 @@
   </ng-sidebar>
 
   <ng-sidebar-accordion-content>
-    <button
-      (click)="sidebar.opened=!sidebar.opened"
-    >click
-    </button>
+    <button (click)="sidebar.opened=!sidebar.opened">click</button>
+    <button (click)="accordion.open('all')">open all</button>
+    <button (click)="accordion.close('all')">close all</button>
     <div>content-pane</div>
   </ng-sidebar-accordion-content>
 </ng-sidebar-accordion>

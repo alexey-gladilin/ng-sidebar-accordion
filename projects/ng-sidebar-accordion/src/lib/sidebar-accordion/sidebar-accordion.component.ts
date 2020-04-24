@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy} from '@angular/core';
 import {SidebarComponent} from "../sidebar.component";
 
+export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
+
 @Component({
   selector: 'ng-sidebar-accordion',
   template: `
@@ -49,6 +51,14 @@ export class SidebarAccordionComponent implements OnDestroy {
     }
   }
 
+  open(value: position): void {
+    this._sidebars.filter(s => s.position === value || value === 'all').forEach(s => s.open());
+  }
+
+  close(value: position): void {
+    this._sidebars.filter(s => s.position === value || value === 'all').forEach(s => s.close());
+  }
+
   private subscribe(sidebar: SidebarComponent): void {
     sidebar.toggle.subscribe((e: SidebarComponent) => {
       e.opened ? e.close() : e.open();
@@ -68,5 +78,4 @@ export class SidebarAccordionComponent implements OnDestroy {
       sidebar.openedChange.unsubscribe();
     });
   }
-
 }
