@@ -51,12 +51,20 @@ export class SidebarAccordionComponent implements OnDestroy {
     }
   }
 
-  open(value: position): void {
-    this._sidebars.filter(s => s.position === value || value === 'all').forEach(s => s.open());
+  open(value: position, index?: number): void {
+    const sidebarsFiltered = this._sidebars.filter(s => s.position === value || value === 'all');
+
+    index
+      ? sidebarsFiltered[index].open()
+      : sidebarsFiltered.forEach(s => s.open());
   }
 
-  close(value: position): void {
-    this._sidebars.filter(s => s.position === value || value === 'all').forEach(s => s.close());
+  close(value: position, index?: number): void {
+    const sidebarsFiltered = this._sidebars.filter(s => s.position === value || value === 'all');
+
+    index
+      ? sidebarsFiltered[index].close()
+      : sidebarsFiltered.forEach(s => s.close());
   }
 
   private subscribe(sidebar: SidebarComponent): void {

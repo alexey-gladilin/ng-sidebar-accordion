@@ -1,34 +1,21 @@
-/*
-.ng-sidebar__ng-sidebar-header {
-  background-color: #bbbbbb;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+::ng-deep:root[theme="dark"] {
+  --ng-sidebar-accordion-space-header: 40px;
+  --ng-sidebar-accordion-space-header-border: 2px;
+  --ng-sidebar-accordion-space-content: 300px;
+  --ng-sidebar-accordion-color-bg: #2b2b2b;
+  --ng-sidebar-accordion-color-header: #a3a2a1;
+  --ng-sidebar-accordion-color-header-bg: #4e5254;
+  --ng-sidebar-accordion-animation-duration: 0.5s;
+
+  --color: #a3a2a1;
 }
 
-.app {
-  &__content-pane{
-    background: #eeeeee;
-    height: 100%;
-  }
-  &__ng-sidebar-header_vertical {
-    transform: rotate(270deg);
-    width: 20px;
-    white-space: nowrap;
-
-    &-border {
-      border-right: solid 2px #eeeeee;
-    }
-  }
+::ng-deep:root {
+  --color: #000000;
 }
 
-//.ng-sidebar__ng-sidebar-content{
-//  width: 200px;
-//  //transition: all 3s;
-//}
-//
-//.ng-sidebar__ng-sidebar-content_open{
-//  width: 500px;
-//  //transition: all 3s;
-//}
-*/
+body,
+.ng-sidebar-content,
+.ng-sidebar-accordion-content {
+  color: var(--color);
+}
