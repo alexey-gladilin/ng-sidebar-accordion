@@ -1,82 +1,64 @@
-<button
-  (click)="sidebar.opened=!sidebar.opened"
->click
-</button>
 <ng-sidebar-accordion>
-  <!--  <ng-sidebar [className]="'myclassname'" position="left">-->
-  <!--    <ng-sidebar-header [className]="'cl1'">left-pane1</ng-sidebar-header>-->
-  <!--  </ng-sidebar>-->
+  <ng-sidebar position="top">
+    <ng-sidebar-header>top-pane1-header</ng-sidebar-header>
+    <ng-sidebar-content>
+      <div>top-pane1-row1</div>
+      <div style="height: 150px">top-pane1-row2</div>
+    </ng-sidebar-content>
+  </ng-sidebar>
+  <ng-sidebar position="top">
+    <ng-sidebar-header>top-pane2-header</ng-sidebar-header>
+    <ng-sidebar-content>
+      <div>top-pane2-row1</div>
+      <div style="height: 150px">top-pane2-row2</div>
+    </ng-sidebar-content>
+  </ng-sidebar>
 
-  <!--  <ng-sidebar position="right">-->
-  <!--    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">-->
-  <!--      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">-->
-  <!--        <div>right-pane-1</div>-->
-  <!--        <div>sidebar-right-pane-header</div>-->
-  <!--      </div>-->
+  <ng-sidebar position="bottom">
+    <ng-sidebar-header>bottom-pane1-header</ng-sidebar-header>
+    <ng-sidebar-content>bottom-pane1-content</ng-sidebar-content>
+  </ng-sidebar>
+  <ng-sidebar position="bottom">
+    <ng-sidebar-header>bottom-pane2-header</ng-sidebar-header>
+    <ng-sidebar-content>bottom-pane2-content</ng-sidebar-content>
+  </ng-sidebar>
 
-  <!--    </ng-sidebar-header>-->
-
-  <!--    <ng-sidebar-content-->
-  <!--      [className]="'app__sidebar-right-pane'"-->
-  <!--    >sidebar-content right pane1-->
-  <!--    </ng-sidebar-content>-->
-  <!--  </ng-sidebar>-->
-
-  <!--  <ng-sidebar position="right">-->
-  <!--    <ng-sidebar-header [className]="'app__ng-sidebar-header_vertical-border'">-->
-  <!--      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">-->
-  <!--        <div>right-pane-1</div>-->
-  <!--        <div>sidebar-right-pane-header</div>-->
-  <!--      </div>-->
-
-  <!--    </ng-sidebar-header>-->
-
-  <!--    <ng-sidebar-content-->
-  <!--      [className]="'app__sidebar-right-pane'"-->
-  <!--    >sidebar-content right pane1-->
-  <!--    </ng-sidebar-content>-->
-  <!--  </ng-sidebar>-->
+  <ng-sidebar position="left">
+    <ng-sidebar-header>left-pane1-header</ng-sidebar-header>
+    <ng-sidebar-content>left-pane1-content</ng-sidebar-content>
+  </ng-sidebar>
+  <ng-sidebar position="left">
+    <ng-sidebar-header>left-pane2-header</ng-sidebar-header>
+    <ng-sidebar-content>left-pane2-content</ng-sidebar-content>
+  </ng-sidebar>
 
   <ng-sidebar #sidebar position="right" [opened]="true">
     <ng-sidebar-header>
-      <div class="app__ng-sidebar-header_vertical" style="width: 50px;">
-        <div>right-pane-1</div>
-        <div>sidebar-right-pane-header</div>
+      <div>
+        <div>right-pane1-header-row1</div>
+        <div>right-pane1-header-row2</div>
       </div>
     </ng-sidebar-header>
 
     <ng-sidebar-content>
-      sidebar-content right pane1
+      right-pane1-content
     </ng-sidebar-content>
   </ng-sidebar>
-
   <ng-sidebar position="right">
     <ng-sidebar-header>
-      <div class="app__ng-sidebar-header_vertical">right-pane-2</div>
+      right-pane2-header
     </ng-sidebar-header>
     <ng-sidebar-content>
-      <div style="background-color: #eeeeee; height: 100%;">sidebar-content right pane2</div>
+      right-pane2-content
     </ng-sidebar-content>
   </ng-sidebar>
 
-
-  <!--  <ng-sidebar position="top">-->
-  <!--    <ng-sidebar-header>top-pane</ng-sidebar-header>-->
-  <!--    <ng-sidebar-content>-->
-  <!--      <div>asdfasdfa</div>-->
-  <!--      <div style="height: 150px">asldkjf alsdjfalsjdfajsdf lajsdf la</div>-->
-  <!--    </ng-sidebar-content>-->
-  <!--  </ng-sidebar>-->
-
-  <!--  <ng-sidebar position="bottom">-->
-  <!--    <ng-sidebar-header>bottom-pane</ng-sidebar-header>-->
-  <!--  </ng-sidebar>-->
-
   <ng-sidebar-accordion-content>
-    ddddddddddddddddddddddddd1111111111111111111111111
-    <div>asdfdddddddddddddddddddddddddddddddddd</div>
+    <button
+      (click)="sidebar.opened=!sidebar.opened"
+    >click
+    </button>
+    <div>content-pane</div>
   </ng-sidebar-accordion-content>
-
-
 </ng-sidebar-accordion>
 

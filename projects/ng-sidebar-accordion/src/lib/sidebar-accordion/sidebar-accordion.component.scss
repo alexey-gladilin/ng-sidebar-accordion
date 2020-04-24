@@ -4,8 +4,13 @@
   flex-wrap: nowrap;
 }
 
-::ng-deep.ng-sidebar-accordion {
+$color-bg-header: #337ab7;
+$color-header: #ffffff;
+$color-bg: #ffffff;
+$border-header: 2px;
 
+::ng-deep.ng-sidebar-accordion {
+  background-color: $color-bg;
   display: grid;
   position: relative;
   height: 100%;
@@ -16,27 +21,137 @@
   grid-template-areas: "left-pane top-pane right-pane" "left-pane content-pane right-pane" "left-pane bottom-pane right-pane";
 
   &__top-pane {
-    //@extend %pane;
+    @extend %pane;
+    flex-direction: column;
     grid-area: top-pane;
+
+    margin: {
+      top: -$border-header;
+    };
+
+    .ng-sidebar-header {
+      border: {
+        top: $border-header solid $color-bg;
+      }
+    }
+
+    .ng-sidebar {
+      flex-direction: column-reverse;
+    }
   }
 
   &__bottom-pane {
-    //@extend %pane;
+    @extend %pane;
+    flex-direction: column;
     grid-area: bottom-pane;
+
+
+    margin: {
+      bottom: -$border-header;
+    };
+
+    .ng-sidebar-header {
+      border: {
+        bottom: $border-header solid $color-bg;
+      }
+    }
+
+    .ng-sidebar {
+      flex-direction: column;
+    }
   }
 
   &__left-pane {
     @extend %pane;
     grid-area: left-pane;
+
+    margin: {
+      left: -$border-header;
+    };
+
+    .ng-sidebar-header {
+      border: {
+        left: $border-header solid $color-bg;
+      }
+    }
+
+    .ng-sidebar {
+      flex-direction: row-reverse;
+    }
   }
 
   &__right-pane {
     @extend %pane;
     grid-area: right-pane;
+
+    margin: {
+      right: -$border-header;
+    };
+
+    .ng-sidebar-header {
+      border: {
+        right: $border-header solid $color-bg;
+      }
+    }
   }
 
   &__content-pane {
+    @extend %pane;
+    flex-direction: column;
     grid-area: content-pane;
   }
+
+  &__top-pane,
+  &__bottom-pane {
+    .ng-sidebar {
+      @extend %pane;
+    }
+
+    .ng-sidebar-header {
+      justify-content: center;
+      height: 40px;
+      align-items: center;
+
+
+      //&__wrapper {
+      //  white-space: nowrap;
+      //  transform: rotate(270deg);
+      //}
+    }
+
+    .ng-sidebar-content {
+      height: 0;
+    }
+  }
+
+  &__left-pane,
+  &__right-pane {
+    .ng-sidebar {
+      @extend %pane;
+    }
+
+    .ng-sidebar-header {
+      &__content {
+        width: 40px;
+        align-self: center;
+      }
+
+      &__wrapper {
+        white-space: nowrap;
+        transform: rotate(270deg);
+      }
+    }
+
+    .ng-sidebar-content {
+      width: 0;
+    }
+  }
+
+  .ng-sidebar-header {
+    @extend %pane;
+    background-color: $color-bg-header;
+    color: $color-header;
+  }
+
 }
 

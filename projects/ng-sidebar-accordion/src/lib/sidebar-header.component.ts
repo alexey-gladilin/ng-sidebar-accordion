@@ -15,7 +15,11 @@ import {SidebarComponent} from './sidebar.component';
 @Component({
   selector: 'ng-sidebar-header',
   template: `
-    <ng-content></ng-content>`,
+    <div class="ng-sidebar-header__content">
+      <div class="ng-sidebar-header__wrapper">
+        <ng-content></ng-content>
+      </div>
+    </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarHeaderComponent implements OnInit, OnDestroy {
