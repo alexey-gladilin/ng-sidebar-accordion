@@ -4,13 +4,18 @@
   flex-wrap: nowrap;
 }
 
-$color-bg-header: #337ab7;
-$color-header: #ffffff;
-$color-bg: #ffffff;
-$border-header: 2px;
+$variable-prefix: --ng-sidebar-accordion-;
+
+::ng-deep:root {
+  #{$variable-prefix}space-header: 40px;
+  #{$variable-prefix}space-header-border: 2px;
+  #{$variable-prefix}color-bg: #ffffff;
+  #{$variable-prefix}color-header: #ffffff;
+  #{$variable-prefix}color-header-bg: #337ab7;
+}
 
 ::ng-deep.ng-sidebar-accordion {
-  background-color: $color-bg;
+  background-color: var(#{$variable-prefix}color-bg);
   display: grid;
   position: relative;
   height: 100%;
@@ -26,12 +31,12 @@ $border-header: 2px;
     grid-area: top-pane;
 
     margin: {
-      top: -$border-header;
+      top: calc(var(#{$variable-prefix}space-header-border) * -1);
     };
 
     .ng-sidebar-header {
       border: {
-        top: $border-header solid $color-bg;
+        top: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -47,12 +52,12 @@ $border-header: 2px;
 
 
     margin: {
-      bottom: -$border-header;
+      bottom: calc(var(#{$variable-prefix}space-header-border) * -1);
     };
 
     .ng-sidebar-header {
       border: {
-        bottom: $border-header solid $color-bg;
+        bottom: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -66,12 +71,12 @@ $border-header: 2px;
     grid-area: left-pane;
 
     margin: {
-      left: -$border-header;
+      left: calc(var(#{$variable-prefix}space-header-border) * -1);
     };
 
     .ng-sidebar-header {
       border: {
-        left: $border-header solid $color-bg;
+        left: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -85,12 +90,12 @@ $border-header: 2px;
     grid-area: right-pane;
 
     margin: {
-      right: -$border-header;
+      right: calc(var(#{$variable-prefix}space-header-border) * -1);
     };
 
     .ng-sidebar-header {
       border: {
-        right: $border-header solid $color-bg;
+        right: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
       }
     }
   }
@@ -109,7 +114,7 @@ $border-header: 2px;
 
     .ng-sidebar-header {
       justify-content: center;
-      height: 40px;
+      height: var(#{$variable-prefix}space-header);
       align-items: center;
 
 
@@ -132,7 +137,7 @@ $border-header: 2px;
 
     .ng-sidebar-header {
       &__content {
-        width: 40px;
+        width: var(#{$variable-prefix}space-header);
         align-self: center;
       }
 
@@ -149,9 +154,8 @@ $border-header: 2px;
 
   .ng-sidebar-header {
     @extend %pane;
-    background-color: $color-bg-header;
-    color: $color-header;
+    background-color: var(#{$variable-prefix}color-header-bg);
+    color: var(#{$variable-prefix}color-header);
   }
-
 }
 
