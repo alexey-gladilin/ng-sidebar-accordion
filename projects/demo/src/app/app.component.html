@@ -1,16 +1,16 @@
 <ng-sidebar-accordion #accordion>
   <ng-sidebar position="top">
-    <ng-sidebar-header>top-pane1-header</ng-sidebar-header>
-    <ng-sidebar-content>
-      <div>top-pane1-row1</div>
-      <div style="height: 150px">top-pane1-row2</div>
-    </ng-sidebar-content>
-  </ng-sidebar>
-  <ng-sidebar position="top">
     <ng-sidebar-header>top-pane2-header</ng-sidebar-header>
     <ng-sidebar-content>
       <div>top-pane2-row1</div>
       <div style="height: 150px">top-pane2-row2</div>
+    </ng-sidebar-content>
+  </ng-sidebar>
+  <ng-sidebar position="top">
+    <ng-sidebar-header>top-pane1-header</ng-sidebar-header>
+    <ng-sidebar-content>
+      <div>top-pane1-row1</div>
+      <div style="height: 150px">top-pane1-row2</div>
     </ng-sidebar-content>
   </ng-sidebar>
 
@@ -24,12 +24,12 @@
   </ng-sidebar>
 
   <ng-sidebar position="left">
-    <ng-sidebar-header>left-pane1-header</ng-sidebar-header>
-    <ng-sidebar-content>left-pane1-content</ng-sidebar-content>
-  </ng-sidebar>
-  <ng-sidebar position="left">
     <ng-sidebar-header>left-pane2-header</ng-sidebar-header>
     <ng-sidebar-content>left-pane2-content</ng-sidebar-content>
+  </ng-sidebar>
+  <ng-sidebar position="left">
+    <ng-sidebar-header>left-pane1-header</ng-sidebar-header>
+    <ng-sidebar-content>left-pane1-content</ng-sidebar-content>
   </ng-sidebar>
 
   <ng-sidebar #sidebar position="right" [opened]="true">
@@ -45,9 +45,9 @@
     </ng-sidebar-content>
   </ng-sidebar>
   <ng-sidebar position="right">
-    <ng-sidebar-header>
-      right-pane2-header
-    </ng-sidebar-header>
+<!--    <ng-sidebar-header>-->
+<!--      right-pane2-header-->
+<!--    </ng-sidebar-header>-->
     <ng-sidebar-content>
       right-pane2-content
     </ng-sidebar-content>
@@ -63,7 +63,7 @@
 
   <ng-sidebar-accordion-content>
     <button (click)="sidebar.opened=!sidebar.opened">click by tagName</button>
-    <button (click)="accordion.open('all')">open all</button>
+    <button (click)="accordion.open('all', 0)">open all</button>
     <button (click)="accordion.close('all')">close all</button>
 
     <button (click)="accordion.open('right', 1)">open right pane 2 index</button>

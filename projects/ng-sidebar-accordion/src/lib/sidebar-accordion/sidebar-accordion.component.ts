@@ -51,21 +51,52 @@ export class SidebarAccordionComponent implements OnDestroy {
     }
   }
 
-  open(value: position, index?: number): void {
-    const sidebarsFiltered = this._sidebars.filter(s => s.position === value || value === 'all');
+  open(value: position, index: number = 0): void {
 
-    index
-      ? sidebarsFiltered[index].open()
-      : sidebarsFiltered.forEach(s => s.open());
+    this.sidebarToggle(value, index, true);
   }
 
-  close(value: position, index?: number): void {
-    const sidebarsFiltered = this._sidebars.filter(s => s.position === value || value === 'all');
-
-    index
-      ? sidebarsFiltered[index].close()
-      : sidebarsFiltered.forEach(s => s.close());
+  close(value: position): void {
+    this.sidebarToggle(value, null, false);
   }
+
+  private sidebarToggle(position: position, index: number, opened: boolean) {
+    const groupByPosition = this.groupBy(this._sidebars, 'position');
+
+    if (groupByPosition.hasOwnProperty('left')) {
+      groupByPosition['left'].reverse();
+    }
+
+    if (groupByPosition.hasOwnProperty('top')) {
+      groupByPosition['top'].reverse();
+    }
+
+    switch (position) {
+      case 'all':
+        Object.keys(groupByPosition).forEach(key => {
+          opened
+            ? groupByPosition[key][index].open()
+            : index
+            ? groupByPosition[key][index].close()
+            : groupByPosition[key].forEach(s => s.close());
+        })
+        break;
+      default:
+        opened
+          ? groupByPosition[position][index].open()
+          : index
+          ? groupByPosition[position][index].close()
+          : groupByPosition[position].forEach(s => s.close());
+        break;
+    }
+  }
+
+  private groupBy = (xs, key) => {
+    return xs.reduce(function (rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
+  };
 
   private subscribe(sidebar: SidebarComponent): void {
     sidebar.toggle.subscribe((e: SidebarComponent) => {
