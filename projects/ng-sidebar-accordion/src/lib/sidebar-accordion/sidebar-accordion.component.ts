@@ -170,18 +170,19 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
 
     let positionValue = getDiffPositionValue() + this._resizeSidebar.spaceContent;
 
+    const spaceSidebarHeaderBorder = +getComputedStyle(root)
+      .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-header-border`)
+      .replace('px', '')
+
     if (positionValue < 0) {
       positionValue = 0;
     }
 
-    console.log('clientWidth ', this.element.nativeElement.clientWidth,
-      ' scrollWidth ', this.element.nativeElement.scrollWidth, 'positionValue ', positionValue);
-
     root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
       positionValue + 'px');
 
-    if (this.element.nativeElement.scrollWidth > this.element.nativeElement.clientWidth + 2) {
-      positionValue -= this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + 2);
+    if (this.element.nativeElement.scrollWidth > this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder) {
+      positionValue -= this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder);
 
       root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
         positionValue + 'px');
