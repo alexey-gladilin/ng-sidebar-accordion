@@ -35,7 +35,7 @@ export class SidebarHeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('mouseup', ['$event']) onHeaderClick(e) {
+  @HostListener('click', ['$event']) onHeaderClick(e) {
     this.clicked.emit(e);
   }
 
