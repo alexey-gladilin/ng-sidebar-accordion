@@ -173,6 +173,10 @@ $variable-prefix: --ng-sidebar-accordion-;
       justify-content: center;
       height: var(#{$variable-prefix}space__sidebar-header);
       align-items: center;
+
+      &__wrapper {
+        white-space: nowrap;
+      }
     }
 
     .ng-sidebar-content {
@@ -214,6 +218,17 @@ $variable-prefix: --ng-sidebar-accordion-;
     }
   }
 
+  &__top-pane_resizable,
+  &__bottom-pane_resizable,
+  &__left-pane_resizable,
+  &__right-pane_resizable {
+    .ng-sidebar_opened {
+      .ng-sidebar-content {
+        transition: none;
+      }
+    }
+  }
+
   .ng-sidebar-header {
     @extend %pane;
     user-select: none;
@@ -228,6 +243,7 @@ $variable-prefix: --ng-sidebar-accordion-;
       height: 100%;
       width: var(#{$variable-prefix}space__sidebar-gutter);
       position: absolute;
+      user-select: none;
       z-index: 1;
     }
 
@@ -236,6 +252,7 @@ $variable-prefix: --ng-sidebar-accordion-;
       height: var(#{$variable-prefix}space__sidebar-gutter);
       width: 100%;
       position: absolute;
+      user-select: none;
       z-index: 1;
     }
   }
