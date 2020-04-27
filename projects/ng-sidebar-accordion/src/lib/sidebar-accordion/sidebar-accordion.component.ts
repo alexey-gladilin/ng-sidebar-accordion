@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy} from '@angular/core';
 import {SidebarComponent} from "../sidebar.component";
 
 export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
@@ -7,18 +7,22 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
   selector: 'ng-sidebar-accordion',
   template: `
     <div class="ng-sidebar-accordion__left-pane">
+      <div *ngIf="_isResizableGutter('left')" class="ng-sidebar-accordion__gutter-vertical"></div>
       <ng-content select="ng-sidebar[position=left]"></ng-content>
     </div>
     <div class="ng-sidebar-accordion__top-pane">
+      <div *ngIf="_isResizableGutter('top')" class="ng-sidebar-accordion__gutter-horizontal"></div>
       <ng-content select="ng-sidebar[position=top]"></ng-content>
     </div>
     <div class="ng-sidebar-accordion__right-pane">
+      <div *ngIf="_isResizableGutter('right')" class="ng-sidebar-accordion__gutter-vertical"></div>
       <ng-content select="ng-sidebar[position=right]"></ng-content>
     </div>
     <div class="ng-sidebar-accordion__content-pane">
       <ng-content select="ng-sidebar-accordion-content"></ng-content>
     </div>
     <div class="ng-sidebar-accordion__bottom-pane">
+      <div *ngIf="_isResizableGutter('bottom')" class="ng-sidebar-accordion__gutter-horizontal"></div>
       <ng-content select="ng-sidebar[position=bottom]"></ng-content>
     </div>
   `,
@@ -32,8 +36,11 @@ export class SidebarAccordionComponent implements OnDestroy {
   @Input() @HostBinding('style.width') width: string;
   @Input() @HostBinding('style.height') height: string;
   @Input() @HostBinding('class') className: string;
-
+  @Input() sidebarResizable: false;
   private _sidebars: Array<SidebarComponent> = [];
+
+  constructor(private cdRef: ChangeDetectorRef) {
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe();
@@ -49,6 +56,20 @@ export class SidebarAccordionComponent implements OnDestroy {
     if (index !== -1) {
       this._sidebars.splice(index, 1);
     }
+  }
+
+  _isResizableGutter(position: string): boolean {
+    if (!position || !this.sidebarResizable) {
+      return false;
+    }
+
+    const groupByPosition = this.groupBy(this._sidebars, 'position');
+
+    if (groupByPosition.hasOwnProperty(position)) {
+      return !!groupByPosition[position].find(s => s.opened);
+    }
+
+    return false;
   }
 
   open(value: position, index: number = 0): void {
@@ -108,6 +129,7 @@ export class SidebarAccordionComponent implements OnDestroy {
           s.position === e.sender.position
         ).forEach(s => s.close());
       }
+      this.cdRef.markForCheck();
     });
   }
 

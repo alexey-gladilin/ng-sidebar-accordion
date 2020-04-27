@@ -1,4 +1,7 @@
-<ng-sidebar-accordion #accordion>
+<ng-sidebar-accordion
+  #accordion
+  [sidebarResizable]="true"
+>
   <ng-sidebar position="top">
     <ng-sidebar-header>top-pane2-header</ng-sidebar-header>
     <ng-sidebar-content>
@@ -45,9 +48,9 @@
     </ng-sidebar-content>
   </ng-sidebar>
   <ng-sidebar position="right">
-<!--    <ng-sidebar-header>-->
-<!--      right-pane2-header-->
-<!--    </ng-sidebar-header>-->
+    <!--    <ng-sidebar-header>-->
+    <!--      right-pane2-header-->
+    <!--    </ng-sidebar-header>-->
     <ng-sidebar-content>
       right-pane2-content
     </ng-sidebar-content>

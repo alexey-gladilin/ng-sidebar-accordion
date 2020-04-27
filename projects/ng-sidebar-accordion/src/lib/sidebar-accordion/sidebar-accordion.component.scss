@@ -7,18 +7,23 @@
 $variable-prefix: --ng-sidebar-accordion-;
 
 ::ng-deep:root {
-  #{$variable-prefix}space-header: 40px;
-  #{$variable-prefix}space-header-border: 2px;
-  #{$variable-prefix}space-content: 300px;
+  #{$variable-prefix}space__sidebar-header: 40px;
+  #{$variable-prefix}space__sidebar-header-border: 2px;
+  #{$variable-prefix}space__sidebar-content-left: 300px;
+  #{$variable-prefix}space__sidebar-content-top: 300px;
+  #{$variable-prefix}space__sidebar-content-bottom: 300px;
+  #{$variable-prefix}space__sidebar-content-right: 300px;
+  #{$variable-prefix}space__sidebar-gutter: 5px;
 
   #{$variable-prefix}color-bg: #ffffff;
-  #{$variable-prefix}color-header: #ffffff;
-  #{$variable-prefix}color-header-bg: #337ab7;
+  #{$variable-prefix}color__sidebar-header: #ffffff;
+  #{$variable-prefix}color__sidebar-header-bg: #337ab7;
 
   #{$variable-prefix}animation-duration: 0.5s;
 }
 
 ::ng-deep.ng-sidebar-accordion {
+  $root: &;
   background-color: var(#{$variable-prefix}color-bg);
   display: grid;
   position: relative;
@@ -29,23 +34,92 @@ $variable-prefix: --ng-sidebar-accordion-;
   grid-template-rows: auto 1fr auto;
   grid-template-areas: "left-pane top-pane right-pane" "left-pane content-pane right-pane" "left-pane bottom-pane right-pane";
 
+  &__left-pane {
+    @extend %pane;
+    grid-area: left-pane;
+
+    margin: {
+      left: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
+    };
+
+    .ng-sidebar-header {
+      border: {
+        left: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
+      }
+    }
+
+    .ng-sidebar {
+      flex-direction: row-reverse;
+
+      &_opened {
+        .ng-sidebar-content {
+          max-width: var(#{$variable-prefix}space__sidebar-content-left);
+          width: var(#{$variable-prefix}space__sidebar-content-left);
+        }
+      }
+    }
+
+    #{$root}__gutter {
+      &-vertical {
+        right: 0;
+      }
+    }
+  }
+
   &__top-pane {
     @extend %pane;
     flex-direction: column;
     grid-area: top-pane;
 
     margin: {
-      top: calc(var(#{$variable-prefix}space-header-border) * -1);
+      top: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
     };
 
     .ng-sidebar-header {
       border: {
-        top: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
+        top: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
       }
     }
 
     .ng-sidebar {
       flex-direction: column-reverse;
+
+      &_opened {
+        .ng-sidebar-content {
+          height: var(#{$variable-prefix}space__sidebar-content-top);
+          max-height: var(#{$variable-prefix}space__sidebar-content-top);
+        }
+      }
+    }
+
+    #{$root}__gutter {
+      &-horizontal {
+        bottom: 0;
+      }
+    }
+  }
+
+  &__right-pane {
+    @extend %pane;
+    grid-area: right-pane;
+
+    margin: {
+      right: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
+    };
+
+    .ng-sidebar-header {
+      border: {
+        right: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
+      }
+    }
+
+    .ng-sidebar {
+      &_opened {
+        .ng-sidebar-content {
+          max-width: var(#{$variable-prefix}space__sidebar-content-right);
+          width: var(#{$variable-prefix}space__sidebar-content-right);
+        }
+      }
     }
   }
 
@@ -56,50 +130,23 @@ $variable-prefix: --ng-sidebar-accordion-;
 
 
     margin: {
-      bottom: calc(var(#{$variable-prefix}space-header-border) * -1);
+      bottom: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
     };
 
     .ng-sidebar-header {
       border: {
-        bottom: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
+        bottom: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
       }
     }
 
     .ng-sidebar {
       flex-direction: column;
-    }
-  }
 
-  &__left-pane {
-    @extend %pane;
-    grid-area: left-pane;
-
-    margin: {
-      left: calc(var(#{$variable-prefix}space-header-border) * -1);
-    };
-
-    .ng-sidebar-header {
-      border: {
-        left: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
-      }
-    }
-
-    .ng-sidebar {
-      flex-direction: row-reverse;
-    }
-  }
-
-  &__right-pane {
-    @extend %pane;
-    grid-area: right-pane;
-
-    margin: {
-      right: calc(var(#{$variable-prefix}space-header-border) * -1);
-    };
-
-    .ng-sidebar-header {
-      border: {
-        right: var(#{$variable-prefix}space-header-border) solid var(#{$variable-prefix}color-bg);
+      &_opened {
+        .ng-sidebar-content {
+          height: var(#{$variable-prefix}space__sidebar-content-bottom);
+          max-height: var(#{$variable-prefix}space__sidebar-content-bottom);
+        }
       }
     }
   }
@@ -117,8 +164,6 @@ $variable-prefix: --ng-sidebar-accordion-;
 
       &_opened {
         .ng-sidebar-content {
-          height: var(#{$variable-prefix}space-content);
-          max-height: var(#{$variable-prefix}space-content);
           transition: height var(#{$variable-prefix}animation-duration);
         }
       }
@@ -126,7 +171,7 @@ $variable-prefix: --ng-sidebar-accordion-;
 
     .ng-sidebar-header {
       justify-content: center;
-      height: var(#{$variable-prefix}space-header);
+      height: var(#{$variable-prefix}space__sidebar-header);
       align-items: center;
     }
 
@@ -144,8 +189,6 @@ $variable-prefix: --ng-sidebar-accordion-;
 
       &_opened {
         .ng-sidebar-content {
-          max-width: var(#{$variable-prefix}space-content);
-          width: var(#{$variable-prefix}space-content);
           transition: width var(#{$variable-prefix}animation-duration);
         }
       }
@@ -153,7 +196,7 @@ $variable-prefix: --ng-sidebar-accordion-;
 
     .ng-sidebar-header {
       &__content {
-        width: var(#{$variable-prefix}space-header);
+        width: var(#{$variable-prefix}space__sidebar-header);
         align-self: center;
       }
 
@@ -175,8 +218,26 @@ $variable-prefix: --ng-sidebar-accordion-;
     @extend %pane;
     user-select: none;
     cursor: pointer;
-    background-color: var(#{$variable-prefix}color-header-bg);
-    color: var(#{$variable-prefix}color-header);
+    background-color: var(#{$variable-prefix}color__sidebar-header-bg);
+    color: var(#{$variable-prefix}color__sidebar-header);
+  }
+
+  &__gutter {
+    &-vertical {
+      cursor: col-resize;
+      height: 100%;
+      width: var(#{$variable-prefix}space__sidebar-gutter);
+      position: absolute;
+      z-index: 1;
+    }
+
+    &-horizontal {
+      cursor: row-resize;
+      height: var(#{$variable-prefix}space__sidebar-gutter);
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+    }
   }
 }
 
