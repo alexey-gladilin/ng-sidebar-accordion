@@ -1,10 +1,10 @@
 ::ng-deep:root[theme="dark"] {
-  --ng-sidebar-accordion-space-header: 40px;
-  --ng-sidebar-accordion-space-header-border: 2px;
-  --ng-sidebar-accordion-space-content: 300px;
+  --ng-sidebar-accordion-space__sidebar-header: 40px;
+  --ng-sidebar-accordion-space__sidebar-header-border: 2px;
+  --ng-sidebar-accordion-space__sidebar-content: 300px;
   --ng-sidebar-accordion-color-bg: #2b2b2b;
-  --ng-sidebar-accordion-color-header: #a3a2a1;
-  --ng-sidebar-accordion-color-header-bg: #4e5254;
+  --ng-sidebar-accordion-color__sidebar-header: #a3a2a1;
+  --ng-sidebar-accordion-color__sidebar-header-bg: #4e5254;
   --ng-sidebar-accordion-animation-duration: 0.5s;
 
   --color: #a3a2a1;
