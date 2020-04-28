@@ -172,7 +172,7 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
 
     const spaceSidebarHeaderBorder = +getComputedStyle(root)
       .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-header-border`)
-      .replace('px', '')
+      .replace('px', '');
 
     if (positionValue < 0) {
       positionValue = 0;
@@ -181,11 +181,21 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
     root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
       positionValue + 'px');
 
-    if (this.element.nativeElement.scrollWidth > this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder) {
-      positionValue -= this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder);
+    // this.correctMaxSizeSidebars();
+    if (this._resizeSidebar.position === 'left' || this._resizeSidebar.position === 'right') {
+      if (this.element.nativeElement.scrollWidth > this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder) {
+        positionValue -= this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder);
 
-      root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
-        positionValue + 'px');
+        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
+          positionValue + 'px');
+      }
+    } else if (this._resizeSidebar.position === 'top' || this._resizeSidebar.position === 'bottom') {
+      if (this.element.nativeElement.scrollHeight > this.element.nativeElement.clientHeight + spaceSidebarHeaderBorder) {
+        positionValue -= this.element.nativeElement.scrollHeight - (this.element.nativeElement.clientHeight + spaceSidebarHeaderBorder);
+
+        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
+          positionValue + 'px');
+      }
     }
   }
 
@@ -222,6 +232,65 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
           : groupByPosition[position].forEach(s => s.close());
         break;
     }
+
+    const root = document.documentElement;
+    const animationDuration = +getComputedStyle(root)
+      .getPropertyValue(`--ng-sidebar-accordion-animation-duration`)
+      .replace('s', '')
+
+    setTimeout(() => this.correctMaxSizeSidebars(), 1000 * animationDuration);
+  }
+
+  private correctMaxSizeSidebars() {
+    const root = document.documentElement;
+
+    const spaceSidebarHeaderBorder = +getComputedStyle(root)
+      .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-header-border`)
+      .replace('px', '');
+
+    const outOfScreenWidth = this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder);
+    const outOfScreenHeight = this.element.nativeElement.scrollHeight - (this.element.nativeElement.clientHeight + spaceSidebarHeaderBorder);
+
+    let openedSidebarsW;
+    let openedSidebarsH;
+    if (outOfScreenWidth > 0) {
+      openedSidebarsW = this._sidebars
+        .filter(s => (s.position === 'left' || s.position === 'right') && s.opened);
+
+      openedSidebarsW.forEach(s => {
+
+        let spaceSidebar = +getComputedStyle(root)
+          .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`)
+          .replace('px', '');
+
+        if (spaceSidebar < 0) {
+          spaceSidebar *= -1;
+        }
+
+        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`,
+          spaceSidebar - (outOfScreenWidth / openedSidebarsW.length) + 'px');
+      });
+    }
+    if (outOfScreenHeight > 0) {
+      openedSidebarsH = this._sidebars
+        .filter(s => (s.position === 'top' || s.position === 'bottom') && s.opened);
+
+      openedSidebarsH.forEach(s => {
+
+        let spaceSidebar = +getComputedStyle(root)
+          .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`)
+          .replace('px', '');
+
+        if (spaceSidebar < 0) {
+          spaceSidebar *= -1;
+        }
+
+        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`,
+          spaceSidebar - (outOfScreenHeight / openedSidebarsH.length) + 'px');
+      });
+    }
+
+    console.log('width:', outOfScreenWidth, ' height:', outOfScreenHeight, openedSidebarsW, openedSidebarsH);
   }
 
   private groupBy = (xs, key) => {
