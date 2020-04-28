@@ -170,10 +170,6 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
 
     let positionValue = getDiffPositionValue() + this._resizeSidebar.spaceContent;
 
-    const spaceSidebarHeaderBorder = +getComputedStyle(root)
-      .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-header-border`)
-      .replace('px', '');
-
     if (positionValue < 0) {
       positionValue = 0;
     }
@@ -181,22 +177,7 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
     root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
       positionValue + 'px');
 
-    // this.correctMaxSizeSidebars();
-    if (this._resizeSidebar.position === 'left' || this._resizeSidebar.position === 'right') {
-      if (this.element.nativeElement.scrollWidth > this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder) {
-        positionValue -= this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder);
-
-        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
-          positionValue + 'px');
-      }
-    } else if (this._resizeSidebar.position === 'top' || this._resizeSidebar.position === 'bottom') {
-      if (this.element.nativeElement.scrollHeight > this.element.nativeElement.clientHeight + spaceSidebarHeaderBorder) {
-        positionValue -= this.element.nativeElement.scrollHeight - (this.element.nativeElement.clientHeight + spaceSidebarHeaderBorder);
-
-        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${this._resizeSidebar.position}`,
-          positionValue + 'px');
-      }
-    }
+    this.correctMaxSizeSidebars();
   }
 
   onMouseUp = (): void => {
@@ -232,16 +213,32 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
           : groupByPosition[position].forEach(s => s.close());
         break;
     }
-
-    const root = document.documentElement;
-    const animationDuration = +getComputedStyle(root)
-      .getPropertyValue(`--ng-sidebar-accordion-animation-duration`)
-      .replace('s', '')
-
-    setTimeout(() => this.correctMaxSizeSidebars(), 1000 * animationDuration);
   }
 
   private correctMaxSizeSidebars() {
+
+    const setSpaceSidebar = (openedSidebars, outOfScreenSize) => {
+      openedSidebars.forEach(s => {
+
+        let spaceSidebar = +getComputedStyle(root)
+          .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`)
+          .replace('px', '');
+
+        if (spaceSidebar < 0) {
+          spaceSidebar *= -1;
+        }
+
+        let spaceValue = spaceSidebar - outOfScreenSize;
+
+        if (spaceValue < 0) {
+          spaceValue = 0;
+        }
+
+        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`,
+          spaceValue + 'px');
+      });
+    }
+
     const root = document.documentElement;
 
     const spaceSidebarHeaderBorder = +getComputedStyle(root)
@@ -251,46 +248,20 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
     const outOfScreenWidth = this.element.nativeElement.scrollWidth - (this.element.nativeElement.clientWidth + spaceSidebarHeaderBorder);
     const outOfScreenHeight = this.element.nativeElement.scrollHeight - (this.element.nativeElement.clientHeight + spaceSidebarHeaderBorder);
 
-    let openedSidebarsW;
-    let openedSidebarsH;
     if (outOfScreenWidth > 0) {
-      openedSidebarsW = this._sidebars
+      const openedSidebarsW = this._sidebars
         .filter(s => (s.position === 'left' || s.position === 'right') && s.opened);
 
-      openedSidebarsW.forEach(s => {
-
-        let spaceSidebar = +getComputedStyle(root)
-          .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`)
-          .replace('px', '');
-
-        if (spaceSidebar < 0) {
-          spaceSidebar *= -1;
-        }
-
-        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`,
-          spaceSidebar - (outOfScreenWidth / openedSidebarsW.length) + 'px');
-      });
+      setSpaceSidebar(openedSidebarsW, outOfScreenWidth);
     }
     if (outOfScreenHeight > 0) {
-      openedSidebarsH = this._sidebars
+      const openedSidebarsH = this._sidebars
         .filter(s => (s.position === 'top' || s.position === 'bottom') && s.opened);
 
-      openedSidebarsH.forEach(s => {
-
-        let spaceSidebar = +getComputedStyle(root)
-          .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`)
-          .replace('px', '');
-
-        if (spaceSidebar < 0) {
-          spaceSidebar *= -1;
-        }
-
-        root.style.setProperty(`--ng-sidebar-accordion-space__sidebar-content-${s.position}`,
-          spaceSidebar - (outOfScreenHeight / openedSidebarsH.length) + 'px');
-      });
+      setSpaceSidebar(openedSidebarsH, outOfScreenHeight);
     }
 
-    console.log('width:', outOfScreenWidth, ' height:', outOfScreenHeight, openedSidebarsW, openedSidebarsH);
+    // console.log('width:', outOfScreenWidth, ' height:', outOfScreenHeight, openedSidebarsW, openedSidebarsH);
   }
 
   private groupBy = (xs, key) => {
@@ -304,6 +275,7 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
     sidebar.toggle.subscribe((e: SidebarComponent) => {
       e.opened ? e.close() : e.open();
     });
+
     sidebar.openedChange.subscribe((e: { sender: SidebarComponent, opened: boolean }) => {
       if (e.opened) {
         this._sidebars.filter(s => s.opened && s != e.sender &&
@@ -311,6 +283,13 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
         ).forEach(s => s.close());
       }
       this.cdRef.markForCheck();
+
+      const root = document.documentElement;
+      const animationDuration = +getComputedStyle(root)
+        .getPropertyValue(`--ng-sidebar-accordion-animation-duration`)
+        .replace('s', '')
+
+      setTimeout(() => this.correctMaxSizeSidebars(), 1000 * animationDuration);
     });
   }
 
