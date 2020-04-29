@@ -161,6 +161,7 @@ All the above classes are always present on the element.
  | Property name | Callback arguments | Description |
  | ------------- | ------------------ | ----------- |
  | `openedChange` | `{ sender: SidebarComponent, opened: boolean }` | Emitted when the sidebar state changes. |
+ | `headerClicked` | `SidebarComponent` | Emitted when the sidebar header clicked. |
  
 
 ### `<ng-sidebar-settings>`
