@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/ng-sidebar-accordion.png?compact=true)](https://nodei.co/npm/ng-sidebar-accordion)
 
-[Demo](http://alexey-gladilin.github.io/ng-sedebar-accordion)
+[Demo](https://alexey-gladilin.github.io/ng-sidebar-accordion/)
 
 ## Installation
 
