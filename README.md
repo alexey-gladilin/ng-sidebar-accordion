@@ -2,6 +2,8 @@
 
 [![NPM](https://nodei.co/npm/ng-sidebar-accordion.png?compact=true)](https://nodei.co/npm/ng-sidebar-accordion)
 
+An Angular sidebar accordion component.
+
 [Demo](https://alexey-gladilin.github.io/ng-sidebar-accordion/)
 
 ## Installation
