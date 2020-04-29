@@ -95,7 +95,6 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
       });
 
     this.sidebarSettingsSubscribe();
-    console.log(this.sideBarSettingsList);
   }
 
   ngOnInit(): void {
@@ -359,7 +358,6 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
       setSpaceSidebar(openedSidebarsH, outOfScreenHeight);
     }
 
-    // console.log('width:', outOfScreenWidth, ' height:', outOfScreenHeight, openedSidebarsW, openedSidebarsH);
   }
 
   private groupBy = (xs, key) => {
@@ -400,13 +398,11 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
 
   private sidebarSettingsSubscribe() {
     this.sideBarSettingsList.forEach(s => {
-      s.modeChange.subscribe(e => {
-        console.log('modeChange', e);
+      s.modeChange.subscribe(() => {
         this.cdRef.markForCheck();
       });
 
-      s.positionChange.subscribe(e => {
-        console.log('positionChange:', e);
+      s.positionChange.subscribe(() => {
         this.cdRef.markForCheck();
       })
     });
