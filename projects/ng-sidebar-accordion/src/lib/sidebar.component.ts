@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   @Input() @HostBinding('class') className: string;
   @Input() @HostBinding('style') style: CSSStyleDeclaration;
 
-  @Output() toggle = new EventEmitter<SidebarComponent>();
+  @Output() headerClicked = new EventEmitter<SidebarComponent>();
   @Output() openedChange = new EventEmitter<{ sender: SidebarComponent, opened: boolean }>();
 
   @HostBinding('class.ng-sidebar_opened') classNameSidebarOpened = false;
@@ -112,7 +112,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private subscribe(header: SidebarHeaderComponent): void {
     header.clicked.subscribe(() => {
-      this.toggle.emit(this);
+      this.headerClicked.emit(this);
     });
   }
 

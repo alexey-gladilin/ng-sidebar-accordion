@@ -369,7 +369,7 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
   };
 
   private sidebarSubscribe(sidebar: SidebarComponent): void {
-    sidebar.toggle.subscribe((e: SidebarComponent) => {
+    sidebar.headerClicked.subscribe((e: SidebarComponent) => {
       e.opened ? e.close() : e.open();
     });
 
@@ -392,7 +392,7 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
 
   private sidebarUnsubscribe(): void {
     this._sidebars.forEach(sidebar => {
-      sidebar.toggle.unsubscribe();
+      sidebar.headerClicked.unsubscribe();
       sidebar.openedChange.unsubscribe();
     });
   }
