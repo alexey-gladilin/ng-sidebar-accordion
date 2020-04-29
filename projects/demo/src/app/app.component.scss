@@ -1,7 +1,10 @@
 ::ng-deep:root[theme="dark"] {
   --ng-sidebar-accordion-space__sidebar-header: 40px;
   --ng-sidebar-accordion-space__sidebar-header-border: 2px;
-  --ng-sidebar-accordion-space__sidebar-content: 300px;
+  --ng-sidebar-accordion-space__sidebar-content-left: 300px;
+  --ng-sidebar-accordion-space__sidebar-content-top: 160px;
+  --ng-sidebar-accordion-space__sidebar-content-bottom: 160px;
+  --ng-sidebar-accordion-space__sidebar-content-right: 300px;
   --ng-sidebar-accordion-color-bg: #2b2b2b;
   --ng-sidebar-accordion-color__sidebar-header: #a3a2a1;
   --ng-sidebar-accordion-color__sidebar-header-bg: #4e5254;
@@ -11,7 +14,7 @@
 }
 
 ::ng-deep:root {
-  --color: #000000;
+  --color: #545555;
   //--ng-sidebar-accordion-space-header: 70px!important;
 }
 
@@ -19,4 +22,59 @@ body,
 .ng-sidebar-content,
 .ng-sidebar-accordion-content {
   color: var(--color);
+  font: 400 1em/1.25 "Source Sans Pro", "Helvetica", "Arial", sans-serif
 }
+
+.app__sidebar-accordion-content {
+  padding: 1rem;
+
+  h1 {
+    border-bottom: dotted 1px;
+    font-weight: normal;
+    font-size: 1.5em;
+  }
+
+  fieldset,
+  button,
+  input,
+  select {
+    padding: 4px;
+    border: solid 1px #a9a9a9;
+    border-radius: 3px;
+  }
+
+  button {
+    margin: 0 5px;
+
+    padding: {
+      top: 10px !important;
+      bottom: 10px !important;
+    }
+  }
+
+  fieldset {
+    padding: 1em;
+    margin: 1rem;
+    min-width: 200px;
+
+    section {
+      display: grid;
+      grid-template-columns: 80px 120px;
+      grid-template-rows: auto auto auto;
+      grid-row-gap: 5px;
+    }
+  }
+}
+
+.app {
+  &__section-button {
+    display: flex;
+    margin: 1rem 0;
+  }
+
+  &__options-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+

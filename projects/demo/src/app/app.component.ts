@@ -1,28 +1,54 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
 import {SidebarAccordionComponent} from 'ng-sidebar-accordion';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
-  @ViewChild('slPosition') slPosition: ElementRef;
-  @ViewChild('slMode') slMode: ElementRef;
+  @ViewChild('slSectionModeElmPosition') slSectionModeElmPosition: ElementRef;
+  @ViewChild('slSectionModeElmMode') slSectionModeElmMode: ElementRef;
   @ViewChild('accordion') accordion: SidebarAccordionComponent;
 
-  private _theme = ''
+  theme = 'light'
+
+  constructor(private cdRef: ChangeDetectorRef) {
+  }
+
+  ngAfterViewInit(): void {
+    this.cdRef.detectChanges();
+  }
 
   onChangeTheme() {
-    this._theme ? this._theme = null : this._theme = 'dark';
-    document.getElementsByTagName('html')[0].setAttribute('theme', this._theme);
+    this.theme !== 'light' ? this.theme = 'light' : this.theme = 'dark';
+    document.getElementsByTagName('html')[0].setAttribute('theme', this.theme);
+  }
+
+  getMode(position: string): string {
+    const sidebarSettings = this.accordion && this.accordion.sideBarSettingsList
+      ? this.accordion.sideBarSettingsList.find(s => s.position === position)
+      : null;
+
+    if (sidebarSettings) {
+      return `(mode: ${sidebarSettings.mode})`;
+    }
+    return '';
   }
 
   onApplyClick() {
-    const sidebarSettings = this.accordion.sideBarSettingsList.find(s => s.position === this.slPosition.nativeElement.value);
+    const sidebarSettings = this.accordion.sideBarSettingsList.find(s => s.position === this.slSectionModeElmPosition.nativeElement.value);
     if (sidebarSettings) {
-      sidebarSettings.mode = this.slMode.nativeElement.value;
+      sidebarSettings.mode = this.slSectionModeElmMode.nativeElement.value;
     }
   }
 }
