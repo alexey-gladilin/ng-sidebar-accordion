@@ -2,6 +2,26 @@
   #accordion
   [sidebarResizable]="true"
 >
+  <ng-sidebar-settings
+    [position]="'left'"
+    [mode]="'push'"
+  ></ng-sidebar-settings>
+
+  <ng-sidebar-settings
+    [position]="'right'"
+    [mode]="'push'"
+  ></ng-sidebar-settings>
+
+  <ng-sidebar-settings
+    [position]="'top'"
+    [mode]="'push'"
+  ></ng-sidebar-settings>
+
+  <ng-sidebar-settings
+    [position]="'bottom'"
+    [mode]="'push'"
+  ></ng-sidebar-settings>
+
   <ng-sidebar position="top">
     <ng-sidebar-header>top-pane2-header</ng-sidebar-header>
     <ng-sidebar-content>
@@ -73,6 +93,28 @@
     <button (click)="accordion.close('right')">close all right pane</button>
 
     <button (click)="onChangeTheme()">change theme</button>
+
+    <section>
+      <label>Position:</label>
+      <select #slPosition>
+        <option>left</option>
+        <option>top</option>
+        <option>right</option>
+        <option>bottom</option>
+      </select>
+    </section>
+    <section>
+      <label>Mode:</label>
+      <select #slMode>
+        <option>push</option>
+        <option>over</option>
+      </select>
+    </section>
+
+    <button
+      (click)="onApplyClick()">
+      Apply
+    </button>
 
     <div>content-pane</div>
   </ng-sidebar-accordion-content>

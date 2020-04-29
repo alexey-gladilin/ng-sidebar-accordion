@@ -64,13 +64,21 @@ $variable-prefix: --ng-sidebar-accordion-;
         right: 0;
       }
     }
+
+    &_over {
+      z-index: 2;
+      position: absolute;
+      -webkit-box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.40);
+      -moz-box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.40);
+      box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.40);
+    }
   }
 
   &__top-pane {
     @extend %pane;
     flex-direction: column;
     grid-area: top-pane;
-
+    width: initial !important;
     margin: {
       top: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
     };
@@ -97,6 +105,14 @@ $variable-prefix: --ng-sidebar-accordion-;
         bottom: 0;
       }
     }
+
+    &_over {
+      z-index: 1;
+      position: absolute;
+      -webkit-box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.40);
+      -moz-box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.40);
+      box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.40);
+    }
   }
 
   &__right-pane {
@@ -121,13 +137,22 @@ $variable-prefix: --ng-sidebar-accordion-;
         }
       }
     }
+
+    &_over {
+      z-index: 2;
+      position: absolute;
+      right: 0;
+      -webkit-box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.40);
+      -moz-box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.40);
+      box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.40);
+    }
   }
 
   &__bottom-pane {
     @extend %pane;
     flex-direction: column;
     grid-area: bottom-pane;
-
+    width: initial !important;
 
     margin: {
       bottom: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
@@ -149,6 +174,15 @@ $variable-prefix: --ng-sidebar-accordion-;
         }
       }
     }
+
+    &_over {
+      z-index: 1;
+      position: absolute;
+      bottom: 0;
+      -webkit-box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.40);
+      -moz-box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.40);
+      box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.40);
+    }
   }
 
   &__content-pane {
@@ -159,6 +193,9 @@ $variable-prefix: --ng-sidebar-accordion-;
 
   &__top-pane,
   &__bottom-pane {
+    width: 100%;
+    background-color: var(#{$variable-prefix}color-bg);
+
     .ng-sidebar {
       @extend %pane;
 
@@ -188,6 +225,9 @@ $variable-prefix: --ng-sidebar-accordion-;
 
   &__left-pane,
   &__right-pane {
+    height: 100%;
+    background-color: var(#{$variable-prefix}color-bg);
+
     .ng-sidebar {
       @extend %pane;
 

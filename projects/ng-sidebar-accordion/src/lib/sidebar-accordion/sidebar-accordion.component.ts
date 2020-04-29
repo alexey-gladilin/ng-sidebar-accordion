@@ -1,21 +1,25 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChildren,
   ElementRef,
   HostBinding,
   Input,
   OnDestroy,
-  OnInit
+  OnInit,
+  QueryList
 } from '@angular/core';
 import {SidebarComponent} from "../sidebar.component";
+import {SidebarSettingsComponent} from "../sidebar-settings.component";
 
 export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
 
 @Component({
   selector: 'ng-sidebar-accordion',
   template: `
-    <div [ngClass]="_getClassName('left')">
+    <div [ngClass]="_getClassName('left')" [ngStyle]="_getStyle('left')">
       <div
         *ngIf="_isResizableGutter('left')"
         class="ng-sidebar-accordion__gutter-vertical"
@@ -24,7 +28,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       </div>
       <ng-content select="ng-sidebar[position=left]"></ng-content>
     </div>
-    <div [ngClass]="_getClassName('top')">
+    <div [ngClass]="_getClassName('top')" [ngStyle]="_getStyle('top')">
       <div
         *ngIf="_isResizableGutter('top')"
         class="ng-sidebar-accordion__gutter-horizontal"
@@ -33,7 +37,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       </div>
       <ng-content select="ng-sidebar[position=top]"></ng-content>
     </div>
-    <div [ngClass]="_getClassName('right')">
+    <div [ngClass]="_getClassName('right')" [ngStyle]="_getStyle('right')">
       <div
         *ngIf="_isResizableGutter('right')"
         class="ng-sidebar-accordion__gutter-vertical"
@@ -42,10 +46,10 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       </div>
       <ng-content select="ng-sidebar[position=right]"></ng-content>
     </div>
-    <div class="ng-sidebar-accordion__content-pane">
+    <div class="ng-sidebar-accordion__content-pane" [ngStyle]="_getStyle()">
       <ng-content select="ng-sidebar-accordion-content"></ng-content>
     </div>
-    <div [ngClass]="_getClassName('bottom')">
+    <div [ngClass]="_getClassName('bottom')" [ngStyle]="_getStyle('bottom')">
       <div
         *ngIf="_isResizableGutter('bottom')"
         class="ng-sidebar-accordion__gutter-horizontal"
@@ -58,7 +62,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
   styleUrls: ['./sidebar-accordion.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarAccordionComponent implements OnInit, OnDestroy {
+export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @HostBinding('class.ng-sidebar-accordion') classNameSidebarAccordion = true;
 
@@ -66,6 +70,9 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
   @Input() @HostBinding('style.height') height: string;
   @Input() @HostBinding('class') className: string;
   @Input() sidebarResizable: false;
+
+  @ContentChildren(SidebarSettingsComponent) sideBarSettingsList: QueryList<SidebarSettingsComponent>;
+
   private _sidebars: Array<SidebarComponent> = [];
   private _resizeSidebar: {
     position: position,
@@ -77,6 +84,20 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
   constructor(private element: ElementRef, private cdRef: ChangeDetectorRef) {
   }
 
+  ngAfterViewInit(): void {
+    const groupSettings = this.groupBy(this.sideBarSettingsList.toArray(), 'position');
+
+    Object.keys(groupSettings)
+      .forEach(key => {
+        if (groupSettings[key].length > 1) {
+          throw new Error('<ng-sidebar-settings> ng-sidebar-settings can\'t be more than one with the same position.')
+        }
+      });
+
+    this.sidebarSettingsSubscribe();
+    console.log(this.sideBarSettingsList);
+  }
+
   ngOnInit(): void {
     window.addEventListener('mousemove', this.onMouseMove);
     window.addEventListener('mouseup', this.onMouseUp);
@@ -85,12 +106,13 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     window.removeEventListener('mousemove', this.onMouseMove);
     window.removeEventListener('mouseup', this.onMouseUp);
-    this.unsubscribe();
+    this.sidebarUnsubscribe();
+    this.sidebarSettingsUnsubscribe();
   }
 
   _addSidebar(sidebar: SidebarComponent): void {
     this._sidebars.push(sidebar);
-    this.subscribe(sidebar);
+    this.sidebarSubscribe(sidebar);
   }
 
   _removeSidebar(sidebar: SidebarComponent): void {
@@ -115,13 +137,89 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
   }
 
   _getClassName(position: position): string {
+    const sideBarSettings = this.sideBarSettingsList.filter(s => s.position === position);
 
     return `ng-sidebar-accordion__${position}-pane${
       (this._resizeSidebar && this._resizeSidebar.position === position
         ?
         ` ng-sidebar-accordion__${position}-pane_resizable`
         : '')
+    }${
+      (sideBarSettings.length > 0 && sideBarSettings[0].mode === 'over'
+          ? ` ng-sidebar-accordion__${position}-pane_over`
+          : ''
+      )
     }`;
+  }
+
+  _getStyle(position?: position) {
+    const root = document.documentElement;
+    const spaceSidebarHeader = +getComputedStyle(root)
+      .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-header`)
+      .replace('px', '');
+
+    const spaceSidebarHeaderBorder = +getComputedStyle(root)
+      .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-header-border`)
+      .replace('px', '');
+
+    const leftPaneIsOver = this.sideBarSettingsList.filter(s => s.position === 'left' && s.mode === 'over').length > 0;
+    const topPaneIsOver = this.sideBarSettingsList.filter(s => s.position === 'top' && s.mode === 'over').length > 0;
+    const rightPaneIsOver = this.sideBarSettingsList.filter(s => s.position === 'right' && s.mode === 'over').length > 0;
+    const bottomPaneIsOver = this.sideBarSettingsList.filter(s => s.position === 'bottom' && s.mode === 'over').length > 0;
+
+    const leftSidebarCount = this._sidebars.filter(s => s.position === 'left' && s._headersLength > 0).length;
+    const topSidebarCount = this._sidebars.filter(s => s.position === 'top' && s._headersLength > 0).length;
+    const rightSidebarCount = this._sidebars.filter(s => s.position === 'right' && s._headersLength > 0).length;
+    const bottomSidebarCount = this._sidebars.filter(s => s.position === 'bottom' && s._headersLength > 0).length;
+
+    let style: any = {};
+
+    switch (position) {
+      case 'top':
+      case 'bottom':
+        const currentPaneIsOver = this.sideBarSettingsList.filter(s => s.position === position && s.mode === 'over').length > 0;
+
+        if (currentPaneIsOver) {
+          if (leftPaneIsOver) {
+            style.left = leftSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+          } else {
+            style.left = '0px';
+          }
+          if (rightPaneIsOver) {
+            style.right = rightSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+          } else {
+            style.right = '0px';
+          }
+          return style;
+        } else {
+          if (leftPaneIsOver) {
+            style.paddingLeft = leftSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+          }
+
+          if (rightPaneIsOver) {
+            style.paddingRight = rightSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+          }
+          return style;
+        }
+      case undefined:
+      case null:
+        if (leftPaneIsOver) {
+          style.paddingLeft = leftSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+        }
+        if (topPaneIsOver) {
+          style.paddingTop = topSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+        }
+        if (rightPaneIsOver) {
+          style.paddingRight = rightSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+        }
+        if (bottomPaneIsOver) {
+          style.paddingBottom = bottomSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
+        }
+
+        return style;
+      default:
+        return null;
+    }
   }
 
   _beginSidebarResize(position: position, e: MouseEvent): void {
@@ -271,7 +369,7 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
     }, {});
   };
 
-  private subscribe(sidebar: SidebarComponent): void {
+  private sidebarSubscribe(sidebar: SidebarComponent): void {
     sidebar.toggle.subscribe((e: SidebarComponent) => {
       e.opened ? e.close() : e.open();
     });
@@ -293,10 +391,31 @@ export class SidebarAccordionComponent implements OnInit, OnDestroy {
     });
   }
 
-  private unsubscribe(): void {
+  private sidebarUnsubscribe(): void {
     this._sidebars.forEach(sidebar => {
       sidebar.toggle.unsubscribe();
       sidebar.openedChange.unsubscribe();
     });
+  }
+
+  private sidebarSettingsSubscribe() {
+    this.sideBarSettingsList.forEach(s => {
+      s.modeChange.subscribe(e => {
+        console.log('modeChange', e);
+        this.cdRef.markForCheck();
+      });
+
+      s.positionChange.subscribe(e => {
+        console.log('positionChange:', e);
+        this.cdRef.markForCheck();
+      })
+    });
+  }
+
+  private sidebarSettingsUnsubscribe() {
+    this.sideBarSettingsList.forEach(s => {
+      s.modeChange.unsubscribe();
+      s.positionChange.unsubscribe();
+    })
   }
 }
