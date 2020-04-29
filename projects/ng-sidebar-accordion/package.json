@@ -7,6 +7,7 @@
     "tslib": "^1.10.0"
   },
   "description": "Angular sidebar accordion component.",
+  "homepage": "https://alexey-gladilin.github.io/ng-sidebar-accordion/",
   "repository": {
     "type": "git",
     "url": "https://github.com/alexey-gladilin/ng-sidebar-accordion"
