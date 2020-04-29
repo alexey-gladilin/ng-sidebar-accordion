@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
-export type position = 'left' | 'top' | 'right' | 'bottom';
-export type mode = 'push' | 'over';
+type position = 'left' | 'top' | 'right' | 'bottom';
+type mode = 'push' | 'over';
 
 @Component({
   selector: 'ng-sidebar-settings',
