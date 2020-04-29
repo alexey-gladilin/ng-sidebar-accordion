@@ -1,9 +1,27 @@
 {
   "name": "ng-sidebar-accordion",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "peerDependencies": {
     "@angular/common": "^9.1.2",
     "@angular/core": "^9.1.2",
     "tslib": "^1.10.0"
-  }
+  },
+  "description": "Angular sidebar accordion component.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexey-gladilin/ng-sidebar-accordion"
+  },
+  "bugs": {
+    "url": "https://github.com/alexey-gladilin/ng-sidebar-accordion/issues"
+  },
+  "author": "Alexey Gladilin",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "ng",
+    "sidebar",
+    "component",
+    "accordion",
+    "panel"
+  ]
 }

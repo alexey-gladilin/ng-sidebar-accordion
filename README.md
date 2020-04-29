@@ -12,7 +12,7 @@ npm install ng-sidebar-accordion
 
 ## Changelog
 
-See the [releases page](https://github.com/alexey-gladilin/ng-sidebar-accordion.git/releases) on GitHub.
+See the [releases page](https://github.com/alexey-gladilin/ng-sidebar-accordion/releases) on GitHub.
 
 
 ## Usage
