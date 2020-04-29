@@ -347,13 +347,14 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
 
     if (outOfScreenWidth > 0) {
       const openedSidebarsW = this._sidebars
-        .filter(s => (s.position === 'left' || s.position === 'right') && s.opened);
-
+        .filter(s => (s.position === 'left' || s.position === 'right') && s.opened
+          && !this.sideBarSettingsList.find(ss => ss.position === s.position && ss.mode === 'over'));
       setSpaceSidebar(openedSidebarsW, outOfScreenWidth);
     }
     if (outOfScreenHeight > 0) {
       const openedSidebarsH = this._sidebars
-        .filter(s => (s.position === 'top' || s.position === 'bottom') && s.opened);
+        .filter(s => (s.position === 'top' || s.position === 'bottom') && s.opened
+          && !this.sideBarSettingsList.find(ss => ss.position === s.position && ss.mode === 'over'));
 
       setSpaceSidebar(openedSidebarsH, outOfScreenHeight);
     }
