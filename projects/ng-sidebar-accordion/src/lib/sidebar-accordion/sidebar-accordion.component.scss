@@ -189,6 +189,12 @@ $variable-prefix: --ng-sidebar-accordion-;
     @extend %pane;
     flex-direction: column;
     grid-area: content-pane;
+    position: absolute;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   &__top-pane,

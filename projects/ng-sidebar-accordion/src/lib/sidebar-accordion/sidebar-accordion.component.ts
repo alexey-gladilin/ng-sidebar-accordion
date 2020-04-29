@@ -183,12 +183,12 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
           if (leftPaneIsOver) {
             style.left = leftSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
           } else {
-            style.left = '0px';
+            style.left = '0';
           }
           if (rightPaneIsOver) {
             style.right = rightSidebarCount * spaceSidebarHeader + spaceSidebarHeaderBorder + 'px';
           } else {
-            style.right = '0px';
+            style.right = '0';
           }
           return style;
         } else {
