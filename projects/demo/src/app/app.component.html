@@ -1,6 +1,9 @@
 <ng-sidebar-accordion
   #accordion
   [sidebarResizable]="true"
+  (sidebarOpenedChange)="onSidebarOpenedChange($event)"
+  (sidebarResizableBegin)="onSidebarResizableBegin($event)"
+  (sidebarResizableEnd)="onSidebarResizableEnd($event)"
 >
   <ng-sidebar-settings
     [position]="'left'"
@@ -167,6 +170,18 @@
               (click)="onChangeTheme()">
               {{theme}}
             </button>
+          </fieldset>
+
+          <fieldset [style.width.px]="357">
+            <legend>events</legend>
+            <section>
+              <textarea
+                id="txtSidebarOpenedChanged"
+                #txtSidebarOpenedChanged
+                [style.height.px]="150"
+                [style.width.px]="350"
+              ></textarea>
+            </section>
           </fieldset>
         </div>
       </div>

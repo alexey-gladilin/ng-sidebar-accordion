@@ -5,14 +5,17 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   QueryList
 } from '@angular/core';
 import {SidebarComponent} from "../sidebar.component";
 import {SidebarSettingsComponent} from "../sidebar-settings.component";
+import {SidebarOpenedEventArgs} from "../sidebar-opened.event-args";
 
 export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
 
@@ -23,7 +26,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       <div
         *ngIf="_isResizableGutter('left')"
         class="ng-sidebar-accordion__gutter-vertical"
-        (mousedown)="_beginSidebarResize('left', $event)"
+        (mousedown)="_onSidebarResizeBegin('left', $event)"
       >
       </div>
       <ng-content select="ng-sidebar[position=left]"></ng-content>
@@ -32,7 +35,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       <div
         *ngIf="_isResizableGutter('top')"
         class="ng-sidebar-accordion__gutter-horizontal"
-        (mousedown)="_beginSidebarResize('top', $event)"
+        (mousedown)="_onSidebarResizeBegin('top', $event)"
       >
       </div>
       <ng-content select="ng-sidebar[position=top]"></ng-content>
@@ -41,7 +44,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       <div
         *ngIf="_isResizableGutter('right')"
         class="ng-sidebar-accordion__gutter-vertical"
-        (mousedown)="_beginSidebarResize('right', $event)"
+        (mousedown)="_onSidebarResizeBegin('right', $event)"
       >
       </div>
       <ng-content select="ng-sidebar[position=right]"></ng-content>
@@ -53,7 +56,7 @@ export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
       <div
         *ngIf="_isResizableGutter('bottom')"
         class="ng-sidebar-accordion__gutter-horizontal"
-        (mousedown)="_beginSidebarResize('bottom', $event)"
+        (mousedown)="_onSidebarResizeBegin('bottom', $event)"
       >
       </div>
       <ng-content select="ng-sidebar[position=bottom]"></ng-content>
@@ -70,6 +73,10 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
   @Input() @HostBinding('style.height') height: string;
   @Input() @HostBinding('class') className: string;
   @Input() sidebarResizable: false;
+
+  @Output() sidebarResizableBegin = new EventEmitter<position>();
+  @Output() sidebarResizableEnd = new EventEmitter<position>();
+  @Output() sidebarOpenedChange = new EventEmitter<SidebarComponent>();
 
   @ContentChildren(SidebarSettingsComponent) sideBarSettingsList: QueryList<SidebarSettingsComponent>;
 
@@ -221,7 +228,7 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
     }
   }
 
-  _beginSidebarResize(position: position, e: MouseEvent): void {
+  _onSidebarResizeBegin(position: position, e: MouseEvent): void {
     const root = document.documentElement;
 
     this._resizeSidebar = {
@@ -232,6 +239,8 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
         .getPropertyValue(`--ng-sidebar-accordion-space__sidebar-content-${position}`)
         .replace('px', '')
     };
+
+    this.sidebarResizableBegin.emit(position);
   }
 
   open(value: position, index: number = 0): void {
@@ -278,7 +287,35 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
   }
 
   onMouseUp = (): void => {
-    delete this._resizeSidebar;
+    if (this._resizeSidebar) {
+      const position = this._resizeSidebar.position;
+      delete this._resizeSidebar;
+
+      this.sidebarResizableEnd.emit(position);
+    }
+  }
+
+  getSidebarIndex(sidebar: SidebarComponent): number {
+
+    if (!sidebar) {
+      return -1;
+    }
+
+    const groupByPosition = this.groupBy(this._sidebars, 'position');
+
+    if (groupByPosition.hasOwnProperty('left')) {
+      groupByPosition['left'].reverse();
+    }
+
+    if (groupByPosition.hasOwnProperty('top')) {
+      groupByPosition['top'].reverse();
+    }
+
+    if (groupByPosition.hasOwnProperty(sidebar.position)) {
+      return groupByPosition[sidebar.position].findIndex(s => s === sidebar);
+    }
+
+    return -1;
   }
 
   private sidebarToggle(position: position, index: number, opened: boolean): void {
@@ -373,7 +410,7 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
       e.opened ? e.close() : e.open();
     });
 
-    sidebar.openedChange.subscribe((e: { sender: SidebarComponent, opened: boolean }) => {
+    sidebar.openedChange.subscribe((e: SidebarOpenedEventArgs) => {
       if (e.opened) {
         this._sidebars.filter(s => s.opened && s != e.sender &&
           s.position === e.sender.position
@@ -387,6 +424,8 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
         .replace('s', '')
 
       setTimeout(() => this.correctMaxSizeSidebars(), 1000 * animationDuration);
+
+      this.sidebarOpenedChange.emit(e.sender);
     });
   }
 

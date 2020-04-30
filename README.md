@@ -148,6 +148,17 @@ All the above classes are always present on the element.
 | `className` | string | | Css class. |
 | `sidebarResizable` | boolean | false | A flag that specifies whether or not the sidebar can be resized. |
 
+#### Outputs
+
+ | Property name | Callback arguments | Description |
+ | ------------- | ------------------ | ----------- |
+| `sidebarResizableBegin` | position | Emitted when the sidebar size change starts. |
+| `sidebarResizableEnd` | position | Emitted when the sidebar size change ends. |
+| `sidebarOpenedChange` | SidebarComponent | Emitted when sidebar state changes. |
+  
+  
+`position: 'left', 'right', 'top', 'bottom'`  
+
 ### `<ng-sidebar>`
 
 #### Inputs

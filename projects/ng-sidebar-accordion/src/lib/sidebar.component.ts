@@ -12,6 +12,7 @@ import {
 import {SidebarAccordionComponent} from './sidebar-accordion/sidebar-accordion.component';
 import {SidebarHeaderComponent} from "./sidebar-header.component";
 import {SidebarContentComponent} from "./sidebar-content.component";
+import {SidebarOpenedEventArgs} from "./sidebar-opened.event-args";
 
 @Component({
   selector: 'ng-sidebar',
@@ -29,7 +30,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   @Input() @HostBinding('style') style: CSSStyleDeclaration;
 
   @Output() headerClicked = new EventEmitter<SidebarComponent>();
-  @Output() openedChange = new EventEmitter<{ sender: SidebarComponent, opened: boolean }>();
+  @Output() openedChange = new EventEmitter<SidebarOpenedEventArgs>();
 
   @HostBinding('class.ng-sidebar_opened') classNameSidebarOpened = false;
 
@@ -49,9 +50,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
   };
 
   set opened(value: boolean) {
-    this._opened = value;
-    this.classNameSidebarOpened = value;
-    this.openedChange.emit({sender: this, opened: value});
+    if (this._opened !== value) {
+      this._opened = value;
+      this.classNameSidebarOpened = value;
+      this.openedChange.emit({sender: this, opened: value});
+    }
   }
 
   get _headersLength() {
