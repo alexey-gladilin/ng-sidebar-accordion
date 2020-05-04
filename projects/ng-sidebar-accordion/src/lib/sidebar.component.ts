@@ -13,6 +13,7 @@ import {SidebarAccordionComponent} from './sidebar-accordion/sidebar-accordion.c
 import {SidebarHeaderComponent} from "./sidebar-header.component";
 import {SidebarContentComponent} from "./sidebar-content.component";
 import {SidebarOpenedEventArgs} from "./sidebar-opened.event-args";
+import {SidebarMouseTouchEventArgs} from "./sidebar-mouse-touch.event-args";
 
 @Component({
   selector: 'ng-sidebar',
@@ -30,6 +31,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   @Input() @HostBinding('style') style: CSSStyleDeclaration;
 
   @Output() headerClicked = new EventEmitter<SidebarComponent>();
+  @Output() headerTouchMoved = new EventEmitter<SidebarMouseTouchEventArgs>();
+  @Output() headerTouchEnded = new EventEmitter<SidebarMouseTouchEventArgs>();
   @Output() openedChange = new EventEmitter<SidebarOpenedEventArgs>();
 
   @HostBinding('class.ng-sidebar_opened') classNameSidebarOpened = false;
@@ -117,9 +120,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
     header.clicked.subscribe(() => {
       this.headerClicked.emit(this);
     });
+
+    header.touchMoved.subscribe(e => {
+      this.headerTouchMoved.emit({sender: this, originalEvent: e});
+    });
+
+    header.touchEnded.subscribe(e => {
+      this.headerTouchEnded.emit({sender: this, originalEvent: e});
+    });
   }
 
   private unsubscribe(): void {
-    this._headers.forEach(header => header.clicked.unsubscribe());
+    this._headers.forEach(header => {
+      header.clicked.unsubscribe();
+      header.touchMoved.unsubscribe();
+      header.touchEnded.unsubscribe();
+    });
   }
 }

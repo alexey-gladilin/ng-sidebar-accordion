@@ -90,6 +90,7 @@ The SidebarAccordion has a few public functions:
 | -------- | ----------- |
 | `open(position, index)` | Opens sidebars. positions - ('all', 'left', 'top', 'right', 'bottom'); index - position the side panel |
 | `close(position)` | Closes sidebars. positions - ('all', 'left', 'top', 'right', 'bottom'); |
+| `getSidebarIndex(sidebar)` | returns the index of the sidebar in an array of a specific position. |
 
 The Sidebar has a few public functions:
 
@@ -111,10 +112,10 @@ Various class names are attached to the sidebar and container for easier styling
 | `ng-sidebar-accordion__top-pane` | Always present on the element where panels are placed at the top edge. |
 | `ng-sidebar-accordion__right-pane` | Always present on the element where panels are placed on the right edge. |
 | `ng-sidebar-accordion__bottom-pane` | Always present on the element where panels are placed along the bottom edge. |
-| `ng-sidebar-accordion__left-pane-pane_resizable` | Appears when resizing the panel is allowed. Left pane. |
-| `ng-sidebar-accordion__top-pane-pane_resizable` | Appears when resizing the panel is allowed. Top pane. |
-| `ng-sidebar-accordion__right-pane-pane_resizable` | Appears when resizing the panel is allowed. Right pane. |
-| `ng-sidebar-accordion__bottom-pane-pane_resizable` | Appears when resizing the panel is allowed. Bottom pane. |
+| `ng-sidebar-accordion__left-pane_resizable` | Appears when resizing the panel is allowed. Left pane. |
+| `ng-sidebar-accordion__top-pane_resizable` | Appears when resizing the panel is allowed. Top pane. |
+| `ng-sidebar-accordion__right-pane_resizable` | Appears when resizing the panel is allowed. Right pane. |
+| `ng-sidebar-accordion__bottom-pane_resizable` | Appears when resizing the panel is allowed. Bottom pane. |
 | `ng-sidebar-accordion__left-pane_over` | Appears when panel mode is set to`over'. Left pane. |
 | `ng-sidebar-accordion__top-pane_over` | Appears when panel mode is set to`over'. Top pane. |
 | `ng-sidebar-accordion__right-pane_over` | Appears when panel mode is set to`over'. Right side. |
@@ -169,12 +170,15 @@ All the above classes are always present on the element.
 | `className` | string | | Css class. |
 | `opened` | boolean | false | State sidebar. |
  
- #### Outputs
+ 
+#### Outputs
  
  | Property name | Callback arguments | Description |
  | ------------- | ------------------ | ----------- |
  | `openedChange` | `{ sender: SidebarComponent, opened: boolean }` | Emitted when the sidebar state changes. |
  | `headerClicked` | `SidebarComponent` | Emitted when the sidebar header clicked. |
+ | `headerTouchMoved` | `SidebarMouseTouchEventArgs` | Emitted when the sidebar header touch moved |
+ | `headerTouchEnded` | `SidebarMouseTouchEventArgs` | Emitted when the sidebar header touch ended |
  
 
 ### `<ng-sidebar-settings>`
@@ -188,7 +192,8 @@ Used to configure sidebar mode
 | `position` | 'left', 'right', 'top', 'bottom' | The sidebar position for which settings are applied. |
 | `mode` | 'push', 'over' | Sidebars mode. |
  
- #### Outputs
+ 
+#### Outputs
  
  | Property name | Callback arguments | Description |
  | ------------- | ------------------ | ----------- |

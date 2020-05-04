@@ -16,6 +16,7 @@ import {
 import {SidebarComponent} from "../sidebar.component";
 import {SidebarSettingsComponent} from "../sidebar-settings.component";
 import {SidebarOpenedEventArgs} from "../sidebar-opened.event-args";
+import {SidebarMouseTouchEventArgs} from "../sidebar-mouse-touch.event-args";
 
 export type position = 'all' | 'left' | 'top' | 'right' | 'bottom';
 
@@ -410,6 +411,47 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
       e.opened ? e.close() : e.open();
     });
 
+    sidebar.headerTouchMoved.subscribe((e: SidebarMouseTouchEventArgs) => {
+      const isAllowResizable = this._sidebars
+        .filter(s => s.position === e.sender.position && s.opened).length > 0;
+
+      if (this.sidebarResizable && isAllowResizable) {
+
+        const groupByPosition = this.groupBy(this._sidebars, 'position');
+
+        if (groupByPosition.hasOwnProperty('left')) {
+          groupByPosition['left'].reverse();
+        }
+
+        if (groupByPosition.hasOwnProperty('top')) {
+          groupByPosition['top'].reverse();
+        }
+
+        // move only first sidebar
+        if (e.sender === groupByPosition[e.sender.position][0]) {
+          if (!this._resizeSidebar) {
+            this._onSidebarResizeBegin(e.sender.position, {
+              clientX: e.originalEvent.touches[0].clientX,
+              clientY: e.originalEvent.touches[0].clientY
+            } as MouseEvent);
+          } else {
+            this.onMouseMove({
+              clientX: e.originalEvent.touches[0].clientX,
+              clientY: e.originalEvent.touches[0].clientY
+            } as MouseEvent);
+          }
+        }
+      }
+    });
+
+    sidebar.headerTouchEnded.subscribe((e: SidebarMouseTouchEventArgs) => {
+      if (this._resizeSidebar) {
+        this.onMouseUp();
+      } else {
+        e.sender.opened ? e.sender.close() : e.sender.open();
+      }
+    });
+
     sidebar.openedChange.subscribe((e: SidebarOpenedEventArgs) => {
       if (e.opened) {
         this._sidebars.filter(s => s.opened && s != e.sender &&
@@ -421,7 +463,7 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
       const root = document.documentElement;
       const animationDuration = +getComputedStyle(root)
         .getPropertyValue(`--ng-sidebar-accordion-animation-duration`)
-        .replace('s', '')
+        .replace('s', '');
 
       setTimeout(() => this.correctMaxSizeSidebars(), 1000 * animationDuration);
 
@@ -433,6 +475,8 @@ export class SidebarAccordionComponent implements AfterViewInit, OnInit, OnDestr
     this._sidebars.forEach(sidebar => {
       sidebar.headerClicked.unsubscribe();
       sidebar.openedChange.unsubscribe();
+      sidebar.headerTouchMoved.unsubscribe();
+      sidebar.headerTouchEnded.unsubscribe();
     });
   }
 

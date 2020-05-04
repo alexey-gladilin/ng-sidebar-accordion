@@ -28,6 +28,8 @@ export class SidebarHeaderComponent implements OnInit, OnDestroy {
   @Input() @HostBinding('class') className: string;
 
   @Output() clicked = new EventEmitter<MouseEvent>();
+  @Output() touchMoved = new EventEmitter<TouchEvent>();
+  @Output() touchEnded = new EventEmitter<TouchEvent>();
 
   constructor(@Optional() private _container: SidebarComponent) {
     if (!this._container) {
@@ -37,6 +39,16 @@ export class SidebarHeaderComponent implements OnInit, OnDestroy {
 
   @HostListener('click', ['$event']) onHeaderClick(e) {
     this.clicked.emit(e);
+  }
+
+  @HostListener('touchmove', ['$event']) onHeaderTouchMove(e: TouchEvent) {
+    e.preventDefault();
+    this.touchMoved.emit(e);
+  }
+
+  @HostListener('touchend', ['$event']) onHeaderTouchEnd(e: TouchEvent) {
+    e.preventDefault();
+    this.touchEnded.emit(e);
   }
 
   ngOnInit(): void {
