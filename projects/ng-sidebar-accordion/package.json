@@ -1,9 +1,9 @@
 {
   "name": "ng-sidebar-accordion",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "peerDependencies": {
-    "@angular/common": "~10.0.5",
-    "@angular/core": "~10.0.5"
+    "@angular/common": "~12.1.2",
+    "@angular/core": "~12.1.2"
   },
   "description": "Angular sidebar accordion component.",
   "homepage": "https://alexey-gladilin.github.io/ng-sidebar-accordion/",

@@ -337,7 +337,7 @@ export class SidebarAccordionComponent
     );
 
     this.correctMaxSizeSidebars();
-  }
+  };
 
   onMouseUp = (): void => {
     if (this._resizeSidebar) {
@@ -346,7 +346,7 @@ export class SidebarAccordionComponent
 
       this.sidebarResizableEnd.emit(position);
     }
-  }
+  };
 
   getSidebarIndex(sidebar: SidebarComponent): number {
     if (!sidebar) {
@@ -388,19 +388,28 @@ export class SidebarAccordionComponent
     switch (position) {
       case 'all':
         Object.keys(groupByPosition).forEach((key) => {
-          opened
-            ? groupByPosition[key][index].open()
-            : index
-            ? groupByPosition[key][index].close()
-            : groupByPosition[key].forEach((s) => s.close());
+          if (index) {
+            opened
+              ? groupByPosition[key][index].open()
+              : groupByPosition[key][index].close();
+          } else {
+            groupByPosition[key].forEach((s) =>
+              opened ? s.open() : s.close()
+            );
+          }
         });
         break;
       default:
-        opened
-          ? groupByPosition[position][index].open()
-          : index
-          ? groupByPosition[position][index].close()
-          : groupByPosition[position].forEach((s) => s.close());
+        if (index) {
+          opened
+            ? groupByPosition[position][index].open()
+            : groupByPosition[position][index].close();
+        } else {
+          groupByPosition[position].forEach((s) =>
+            opened ? s.open : s.close()
+          );
+        }
+
         break;
     }
   }
@@ -474,7 +483,7 @@ export class SidebarAccordionComponent
       (rv[x[key]] = rv[x[key]] || []).push(x);
       return rv;
     }, {});
-  }
+  };
 
   private sidebarSubscribe(sidebar: SidebarComponent): void {
     sidebar.headerClicked.subscribe((e: SidebarComponent) => {

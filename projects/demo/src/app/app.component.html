@@ -15,10 +15,7 @@
     [mode]="'push'"
   ></ng-sidebar-settings>
 
-  <ng-sidebar-settings
-    [position]="'top'"
-    [mode]="'push'"
-  ></ng-sidebar-settings>
+  <ng-sidebar-settings [position]="'top'" [mode]="'push'"></ng-sidebar-settings>
 
   <ng-sidebar-settings
     [position]="'bottom'"
@@ -26,40 +23,49 @@
   ></ng-sidebar-settings>
 
   <ng-sidebar position="left">
-    <ng-sidebar-header>left-pane1-header {{getMode('left')}}</ng-sidebar-header>
+    <ng-sidebar-header
+      >left-pane1-header {{ getMode("left") }}</ng-sidebar-header
+    >
     <ng-sidebar-content>left-pane1-content</ng-sidebar-content>
   </ng-sidebar>
   <ng-sidebar position="left">
-    <ng-sidebar-header>left-pane0-header {{getMode('left')}}</ng-sidebar-header>
+    <ng-sidebar-header
+      >left-pane0-header {{ getMode("left") }}</ng-sidebar-header
+    >
     <ng-sidebar-content>left-pane0-content</ng-sidebar-content>
   </ng-sidebar>
 
   <ng-sidebar position="top">
-    <ng-sidebar-header>top-pane1-header {{getMode('top')}}</ng-sidebar-header>
+    <ng-sidebar-header>top-pane1-header {{ getMode("top") }}</ng-sidebar-header>
     <ng-sidebar-content>
       <div>top-pane1-row1</div>
       <div style="height: 150px">top-pane1-row2</div>
     </ng-sidebar-content>
   </ng-sidebar>
   <ng-sidebar position="top">
-    <ng-sidebar-header>top-pane0-header {{getMode('top')}}</ng-sidebar-header>
+    <ng-sidebar-header>top-pane0-header {{ getMode("top") }}</ng-sidebar-header>
     <ng-sidebar-content>
       <div>top-pane0-row1</div>
       <div style="height: 150px">top-pane0-row2</div>
     </ng-sidebar-content>
   </ng-sidebar>
 
-  <ng-sidebar #sidebar position="right" [opened]="true">
+  <ng-sidebar #sidebar position="right" [opened]="true" [pinned]="true">
     <ng-sidebar-header>
-      <div>
-        <div>right-pane0-header-row1 {{getMode('right')}}</div>
-        <div>right-pane0-header-row2</div>
+      <div class="app__header-pinned">
+        <div
+          class="fa fa-thumb-tack"
+          [class.pinned]="sidebar.pinned"
+          (click)="onPinnedClick($event, sidebar)"
+        ></div>
+        <div>
+          <div>right-pane0-header-row1 {{ getMode("right") }}</div>
+          <div>right-pane0-header-row2</div>
+        </div>
       </div>
     </ng-sidebar-header>
 
-    <ng-sidebar-content>
-      right-pane0-content
-    </ng-sidebar-content>
+    <ng-sidebar-content> right-pane0-content </ng-sidebar-content>
   </ng-sidebar>
   <ng-sidebar position="right">
     <!--    <ng-sidebar-header>-->
@@ -71,19 +77,21 @@
   </ng-sidebar>
   <ng-sidebar position="right">
     <ng-sidebar-header>
-      right-pane2-header {{getMode('right')}}
+      right-pane2-header {{ getMode("right") }}
     </ng-sidebar-header>
-    <ng-sidebar-content>
-      right-pane2-content
-    </ng-sidebar-content>
+    <ng-sidebar-content> right-pane2-content </ng-sidebar-content>
   </ng-sidebar>
 
   <ng-sidebar position="bottom">
-    <ng-sidebar-header>bottom-pane0-header {{getMode('bottom')}}</ng-sidebar-header>
+    <ng-sidebar-header
+      >bottom-pane0-header {{ getMode("bottom") }}</ng-sidebar-header
+    >
     <ng-sidebar-content>bottom-pane0-content</ng-sidebar-content>
   </ng-sidebar>
   <ng-sidebar position="bottom">
-    <ng-sidebar-header>bottom-pane1-header {{getMode('bottom')}}</ng-sidebar-header>
+    <ng-sidebar-header
+      >bottom-pane1-header {{ getMode("bottom") }}</ng-sidebar-header
+    >
     <ng-sidebar-content>bottom-pane1-content</ng-sidebar-content>
   </ng-sidebar>
 
@@ -91,18 +99,14 @@
     <div>
       <div class="app__options">
         <header>
-          <h1>
-            Options
-          </h1>
+          <h1>Options</h1>
         </header>
         <div class="app__options-content">
           <fieldset>
             <legend>open/close</legend>
             <section>
               <label for="slSectionOpenElmPosition">position:</label>
-              <select
-                id="slSectionOpenElmPosition"
-                #slSectionOpenElmPosition>
+              <select id="slSectionOpenElmPosition" #slSectionOpenElmPosition>
                 <option>all</option>
                 <option>left</option>
                 <option>top</option>
@@ -118,17 +122,25 @@
                 value="0"
                 max="2"
                 min="0"
-                #txtSectionOpenElmIndex/>
+                #txtSectionOpenElmIndex
+              />
             </section>
             <div class="app__section-button">
               <button
                 style="width: 100%"
-                (click)="accordion.open(slSectionOpenElmPosition.value, +txtSectionOpenElmIndex.value)">
+                (click)="
+                  accordion.open(
+                    slSectionOpenElmPosition.value,
+                    +txtSectionOpenElmIndex.value
+                  )
+                "
+              >
                 open
               </button>
               <button
                 style="width: 100%"
-                (click)="accordion.close(slSectionOpenElmPosition.value)">
+                (click)="accordion.close(slSectionOpenElmPosition.value)"
+              >
                 close
               </button>
             </div>
@@ -138,9 +150,7 @@
             <legend>sidebar mode</legend>
             <section>
               <label for="slSectionModeElmPosition">position:</label>
-              <select
-                id="slSectionModeElmPosition"
-                #slSectionModeElmPosition>
+              <select id="slSectionModeElmPosition" #slSectionModeElmPosition>
                 <option>left</option>
                 <option>top</option>
                 <option>right</option>
@@ -149,26 +159,18 @@
             </section>
             <section>
               <label for="slSectionModeElmMode">mode:</label>
-              <select
-                id="slSectionModeElmMode"
-                #slSectionModeElmMode>
+              <select id="slSectionModeElmMode" #slSectionModeElmMode>
                 <option>push</option>
                 <option>over</option>
               </select>
             </section>
-            <button
-              style="width: 100%"
-              (click)="onApplyClick()">
-              apply
-            </button>
+            <button style="width: 100%" (click)="onApplyClick()">apply</button>
           </fieldset>
 
           <fieldset>
             <legend>theme</legend>
-            <button
-              style="width: 100%"
-              (click)="onChangeTheme()">
-              {{theme}}
+            <button style="width: 100%" (click)="onChangeTheme()">
+              {{ theme }}
             </button>
           </fieldset>
 
@@ -187,46 +189,43 @@
       </div>
 
       <div>
-        <h1>
-          Some content
-        </h1>
+        <h1>Some content</h1>
         <div class="app__content">
           <p>The quick brown fox jumps over the lazy dog</p>
           <article>
-            The earliest known appearance of the phrase is from The Boston Journal. In an article titled "Current Notes"
-            in the February 9, 1885, edition, the phrase is mentioned as a good practice sentence for writing students:
-            "A
-            favorite copy set by writing teachers for their pupils is the following, because it contains every letter of
-            the alphabet: 'A quick brown fox jumps over the lazy dog.'"[1] Dozens of other newspapers published the
-            phrase
-            over the next few months, all using the version of the sentence starting with "A" rather than "The".[2] The
-            earliest known use of the phrase starting with "The" is from the 1888 book Illustrative Shorthand by Linda
-            Bronson.[3] The modern form (starting with "The") became more common despite the fact that it is slightly
-            longer than the original (starting with "A").
-
-            As the use of typewriters grew in the late 19th century, the phrase began appearing in typing lesson books
-            as
-            a practice sentence. Early examples include How to Become Expert in Typewriting: A Complete Instructor
-            Designed Especially for the Remington Typewriter (1890),[4] and Typewriting Instructor and Stenographer's
-            Hand-book (1892). By the turn of the 20th century, the phrase had become widely known. In the January 10,
-            1903, issue of Pitman's Phonetic Journal, it is referred to as "the well known memorized typing line
-            embracing
-            all the letters of the alphabet".[5] Robert Baden-Powell's book Scouting for Boys (1908) uses the phrase as
-            a
-            practice sentence for signaling.[6]
-
-            The first message sent on the Moscow–Washington hotline on August 30, 1963, was the test phrase "THE QUICK
-            BROWN FOX JUMPED OVER THE LAZY DOG'S BACK 1234567890".[7] Later, during testing, the Russian translators
-            sent
-            a message asking their American counterparts, "What does it mean when your people say 'The quick brown fox
-            jumped over the lazy dog'?"[8]
-
-            During the 20th century, technicians tested typewriters and teleprinters by typing the sentence.[9]
+            The earliest known appearance of the phrase is from The Boston
+            Journal. In an article titled "Current Notes" in the February 9,
+            1885, edition, the phrase is mentioned as a good practice sentence
+            for writing students: "A favorite copy set by writing teachers for
+            their pupils is the following, because it contains every letter of
+            the alphabet: 'A quick brown fox jumps over the lazy dog.'"[1]
+            Dozens of other newspapers published the phrase over the next few
+            months, all using the version of the sentence starting with "A"
+            rather than "The".[2] The earliest known use of the phrase starting
+            with "The" is from the 1888 book Illustrative Shorthand by Linda
+            Bronson.[3] The modern form (starting with "The") became more common
+            despite the fact that it is slightly longer than the original
+            (starting with "A"). As the use of typewriters grew in the late 19th
+            century, the phrase began appearing in typing lesson books as a
+            practice sentence. Early examples include How to Become Expert in
+            Typewriting: A Complete Instructor Designed Especially for the
+            Remington Typewriter (1890),[4] and Typewriting Instructor and
+            Stenographer's Hand-book (1892). By the turn of the 20th century,
+            the phrase had become widely known. In the January 10, 1903, issue
+            of Pitman's Phonetic Journal, it is referred to as "the well known
+            memorized typing line embracing all the letters of the alphabet".[5]
+            Robert Baden-Powell's book Scouting for Boys (1908) uses the phrase
+            as a practice sentence for signaling.[6] The first message sent on
+            the Moscow–Washington hotline on August 30, 1963, was the test
+            phrase "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG'S BACK
+            1234567890".[7] Later, during testing, the Russian translators sent
+            a message asking their American counterparts, "What does it mean
+            when your people say 'The quick brown fox jumped over the lazy
+            dog'?"[8] During the 20th century, technicians tested typewriters
+            and teleprinters by typing the sentence.[9]
           </article>
         </div>
       </div>
     </div>
-
   </ng-sidebar-accordion-content>
 </ng-sidebar-accordion>
-

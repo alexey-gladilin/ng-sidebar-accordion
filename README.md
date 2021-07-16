@@ -169,6 +169,7 @@ All the above classes are always present on the element.
 | `position` | 'left', 'right', 'top', 'bottom' | | The position where to place the sidebar. |
 | `className` | string | | Css class. |
 | `opened` | boolean | false | State sidebar. |
+| `pinned` | boolean | false | Pin the sidebar |
  
  
 #### Outputs

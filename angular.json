@@ -103,7 +103,22 @@
             "tsConfig": "projects/demo/tsconfig.app.json",
             "assets": [
               "projects/demo/src/favicon.ico",
-              "projects/demo/src/assets"
+              "projects/demo/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/demo/src/assets/styles",
+                "output": "/styles/"
+              },
+              {
+                "glob": "font-awesome.min.css",
+                "input": "node_modules/font-awesome/css",
+                "output": "/styles/font-awesome/css"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/font-awesome/fonts",
+                "output": "/styles/font-awesome/fonts"
+              }
             ],
             "styles": [
               "projects/demo/src/styles.scss"

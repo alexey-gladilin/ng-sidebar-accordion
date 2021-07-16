@@ -22,7 +22,7 @@ body,
 .ng-sidebar-content,
 .ng-sidebar-accordion-content {
   color: var(--color);
-  font: 400 1em/1.25 "Source Sans Pro", "Helvetica", "Arial", sans-serif
+  font: 400 1em/1.25 "Source Sans Pro", "Helvetica", "Arial", sans-serif;
 }
 
 .app__sidebar-accordion-content {
@@ -50,6 +50,10 @@ body,
       top: 10px !important;
       bottom: 10px !important;
     }
+    &:hover{
+      background-color: #a3a2a1;
+      color: white;
+    }
   }
 
   fieldset {
@@ -76,5 +80,14 @@ body,
     display: flex;
     flex-wrap: wrap;
   }
-}
+  &__header-pinned {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    grid-gap: 20px;
 
+    .pinned{
+      color: #2b2b2b;
+    }
+  }
+}

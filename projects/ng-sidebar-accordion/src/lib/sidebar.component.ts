@@ -51,6 +51,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() pinned = false;
+
   private _opened = false;
 
   @Input() get opened(): boolean {
@@ -114,11 +116,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   open(): void {
-    this.opened = true;
+    if (!this.pinned) {
+      this.opened = true;
+    }
   }
 
   close(): void {
-    this.opened = false;
+    if (!this.pinned) {
+      this.opened = false;
+    }
   }
 
   private subscribe(header: SidebarHeaderComponent): void {
