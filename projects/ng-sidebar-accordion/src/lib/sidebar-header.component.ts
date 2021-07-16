@@ -8,22 +8,20 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Output
+  Output,
 } from '@angular/core';
-import {SidebarComponent} from './sidebar.component';
+import { SidebarComponent } from './sidebar.component';
 
 @Component({
   selector: 'ng-sidebar-header',
-  template: `
-    <div class="ng-sidebar-header__content">
-      <div class="ng-sidebar-header__wrapper">
-        <ng-content></ng-content>
-      </div>
-    </div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: ` <div class="ng-sidebar-header__content">
+    <div class="ng-sidebar-header__wrapper">
+      <ng-content></ng-content>
+    </div>
+  </div>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarHeaderComponent implements OnInit, OnDestroy {
-
   @HostBinding('class.ng-sidebar-header') classNameSidebarHeader = true;
   @Input() @HostBinding('class') className: string;
 
@@ -33,7 +31,9 @@ export class SidebarHeaderComponent implements OnInit, OnDestroy {
 
   constructor(@Optional() private _container: SidebarComponent) {
     if (!this._container) {
-      throw new Error('<ng-sidebar-header> must be inside a <ng-sidebar></ng-sidebar>.');
+      throw new Error(
+        '<ng-sidebar-header> must be inside a <ng-sidebar></ng-sidebar>.'
+      );
     }
   }
 

@@ -1,4 +1,4 @@
-import {SidebarComponent} from "./sidebar.component";
+import { SidebarComponent } from './sidebar.component';
 
 export class SidebarOpenedEventArgs {
   sender: SidebarComponent;

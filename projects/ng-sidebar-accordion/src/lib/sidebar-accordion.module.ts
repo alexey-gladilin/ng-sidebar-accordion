@@ -1,23 +1,21 @@
-import {NgModule} from '@angular/core';
-import {SidebarComponent} from './sidebar.component';
-import {CommonModule} from '@angular/common';
-import {SidebarHeaderComponent} from './sidebar-header.component';
-import {SidebarAccordionComponent} from './sidebar-accordion/sidebar-accordion.component';
-import {SidebarContentComponent} from './sidebar-content.component';
-import {SidebarAccordionContentComponent} from './sidebar-accordion-content.component';
+import { NgModule } from '@angular/core';
+import { SidebarComponent } from './sidebar.component';
+import { CommonModule } from '@angular/common';
+import { SidebarHeaderComponent } from './sidebar-header.component';
+import { SidebarAccordionComponent } from './sidebar-accordion/sidebar-accordion.component';
+import { SidebarContentComponent } from './sidebar-content.component';
+import { SidebarAccordionContentComponent } from './sidebar-accordion-content.component';
 import { SidebarSettingsComponent } from './sidebar-settings.component';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   declarations: [
     SidebarHeaderComponent,
     SidebarContentComponent,
     SidebarComponent,
     SidebarAccordionContentComponent,
     SidebarAccordionComponent,
-    SidebarSettingsComponent
+    SidebarSettingsComponent,
   ],
   exports: [
     SidebarHeaderComponent,
@@ -25,8 +23,7 @@ import { SidebarSettingsComponent } from './sidebar-settings.component';
     SidebarComponent,
     SidebarAccordionContentComponent,
     SidebarAccordionComponent,
-    SidebarSettingsComponent
-  ]
+    SidebarSettingsComponent,
+  ],
 })
-export class SidebarAccordionModule {
-}
+export class SidebarAccordionModule {}

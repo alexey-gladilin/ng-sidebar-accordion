@@ -40,11 +40,12 @@ $variable-prefix: --ng-sidebar-accordion-;
 
     margin: {
       left: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
-    };
+    }
 
     .ng-sidebar-header {
       border: {
-        left: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
+        left: var(#{$variable-prefix}space__sidebar-header-border) solid
+          var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -68,9 +69,9 @@ $variable-prefix: --ng-sidebar-accordion-;
     &_over {
       z-index: 2;
       position: absolute;
-      -webkit-box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.40);
-      -moz-box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.40);
-      box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.40);
+      -webkit-box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.4);
+      box-shadow: 10px 0 50px -15px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -81,11 +82,12 @@ $variable-prefix: --ng-sidebar-accordion-;
     width: initial !important;
     margin: {
       top: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
-    };
+    }
 
     .ng-sidebar-header {
       border: {
-        top: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
+        top: var(#{$variable-prefix}space__sidebar-header-border) solid
+          var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -109,9 +111,9 @@ $variable-prefix: --ng-sidebar-accordion-;
     &_over {
       z-index: 1;
       position: absolute;
-      -webkit-box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.40);
-      -moz-box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.40);
-      box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.40);
+      -webkit-box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 50px -15px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -121,11 +123,12 @@ $variable-prefix: --ng-sidebar-accordion-;
 
     margin: {
       right: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
-    };
+    }
 
     .ng-sidebar-header {
       border: {
-        right: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
+        right: var(#{$variable-prefix}space__sidebar-header-border) solid
+          var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -142,9 +145,9 @@ $variable-prefix: --ng-sidebar-accordion-;
       z-index: 2;
       position: absolute;
       right: 0;
-      -webkit-box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.40);
-      -moz-box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.40);
-      box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.40);
+      -webkit-box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.4);
+      box-shadow: -10px 0px 50px -15px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -156,11 +159,12 @@ $variable-prefix: --ng-sidebar-accordion-;
 
     margin: {
       bottom: calc(var(#{$variable-prefix}space__sidebar-header-border) * -1);
-    };
+    }
 
     .ng-sidebar-header {
       border: {
-        bottom: var(#{$variable-prefix}space__sidebar-header-border) solid var(#{$variable-prefix}color-bg);
+        bottom: var(#{$variable-prefix}space__sidebar-header-border) solid
+          var(#{$variable-prefix}color-bg);
       }
     }
 
@@ -179,9 +183,9 @@ $variable-prefix: --ng-sidebar-accordion-;
       z-index: 1;
       position: absolute;
       bottom: 0;
-      -webkit-box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.40);
-      -moz-box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.40);
-      box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.40);
+      -webkit-box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0px -10px 50px -15px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -260,7 +264,6 @@ $variable-prefix: --ng-sidebar-accordion-;
       width: 0;
       overflow: hidden;
       transition: width var(#{$variable-prefix}animation-duration);
-
     }
   }
 
@@ -303,4 +306,3 @@ $variable-prefix: --ng-sidebar-accordion-;
     }
   }
 }
-

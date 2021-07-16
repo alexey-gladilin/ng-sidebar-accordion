@@ -7,13 +7,13 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Output
+  Output,
 } from '@angular/core';
-import {SidebarAccordionComponent} from './sidebar-accordion/sidebar-accordion.component';
-import {SidebarHeaderComponent} from "./sidebar-header.component";
-import {SidebarContentComponent} from "./sidebar-content.component";
-import {SidebarOpenedEventArgs} from "./sidebar-opened.event-args";
-import {SidebarMouseTouchEventArgs} from "./sidebar-mouse-touch.event-args";
+import { SidebarAccordionComponent } from './sidebar-accordion/sidebar-accordion.component';
+import { SidebarHeaderComponent } from './sidebar-header.component';
+import { SidebarContentComponent } from './sidebar-content.component';
+import { SidebarOpenedEventArgs } from './sidebar-opened.event-args';
+import { SidebarMouseTouchEventArgs } from './sidebar-mouse-touch.event-args';
 
 @Component({
   selector: 'ng-sidebar',
@@ -21,11 +21,14 @@ import {SidebarMouseTouchEventArgs} from "./sidebar-mouse-touch.event-args";
     <ng-content select="ng-sidebar-header, [ng-sidebar-header]"></ng-content>
     <ng-content select="ng-sidebar-content, [ng-sidebar-content]"></ng-content>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-
-  @Input() @HostBinding('attr.position') position: 'left' | 'right' | 'top' | 'bottom';
+  @Input() @HostBinding('attr.position') position:
+    | 'left'
+    | 'right'
+    | 'top'
+    | 'bottom';
   @Input() @HostBinding('class.ng-sidebar') classNameSidebar = true;
   @Input() @HostBinding('class') className: string;
   @Input() @HostBinding('style') style: CSSStyleDeclaration;
@@ -42,7 +45,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   constructor(@Optional() private _container: SidebarAccordionComponent) {
     if (!this._container) {
-      throw new Error('<ng-sidebar-accordion> must be inside a <ng-sidebar-accordion></ng-sidebar-accordion>.');
+      throw new Error(
+        '<ng-sidebar-accordion> must be inside a <ng-sidebar-accordion></ng-sidebar-accordion>.'
+      );
     }
   }
 
@@ -50,13 +55,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @Input() get opened(): boolean {
     return this._opened;
-  };
+  }
 
   set opened(value: boolean) {
     if (this._opened !== value) {
       this._opened = value;
       this.classNameSidebarOpened = value;
-      this.openedChange.emit({sender: this, opened: value});
+      this.openedChange.emit({ sender: this, opened: value });
     }
   }
 
@@ -121,17 +126,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.headerClicked.emit(this);
     });
 
-    header.touchMoved.subscribe(e => {
-      this.headerTouchMoved.emit({sender: this, originalEvent: e});
+    header.touchMoved.subscribe((e) => {
+      this.headerTouchMoved.emit({ sender: this, originalEvent: e });
     });
 
-    header.touchEnded.subscribe(e => {
-      this.headerTouchEnded.emit({sender: this, originalEvent: e});
+    header.touchEnded.subscribe((e) => {
+      this.headerTouchEnded.emit({ sender: this, originalEvent: e });
     });
   }
 
   private unsubscribe(): void {
-    this._headers.forEach(header => {
+    this._headers.forEach((header) => {
       header.clicked.unsubscribe();
       header.touchMoved.unsubscribe();
       header.touchEnded.unsubscribe();
