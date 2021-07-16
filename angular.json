@@ -37,7 +37,7 @@
       "prefix": "ng",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ng-sidebar-accordion/tsconfig.lib.json",
             "project": "projects/ng-sidebar-accordion/ng-package.json"
@@ -124,7 +124,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
