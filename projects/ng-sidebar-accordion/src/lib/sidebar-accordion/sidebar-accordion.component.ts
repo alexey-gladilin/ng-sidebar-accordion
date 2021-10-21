@@ -70,7 +70,7 @@ export class SidebarAccordionComponent
   @Input() @HostBinding('style.width') width: string;
   @Input() @HostBinding('style.height') height: string;
   @Input() @HostBinding('class') className: string;
-  @Input() sidebarResizable: false;
+  @Input() sidebarResizable = false;
 
   @Output() sidebarResizableBegin = new EventEmitter<Position>();
   @Output() sidebarResizableEnd = new EventEmitter<Position>();
